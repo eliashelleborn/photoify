@@ -10,6 +10,10 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
+
+    <!-- App Style -->
+    <link rel="stylesheet" href="css/app.css">
+
 </head>
 
 <body>
