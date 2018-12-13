@@ -32,6 +32,32 @@ class RegisterTest extends TestCase
             ]);
     }
 
+    public function testEmailHasAlreadyBeenTaken()
+    {
+
+        $userData = [
+            'email' => 'testregister@test.com',
+            'name' => 'Test Register',
+            'password' => '123',
+        ];
+
+        $user = factory(User::class)->create($userData);
+
+        $this->json('POST', 'api/auth/register', $userData)
+            ->assertStatus(422)
+            ->assertJson([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "email" => [
+                        "The email has already been taken.",
+                    ],
+                ],
+            ]);
+
+        $user->delete();
+
+    }
+
     public function testRegisterSuccessfully()
     {
         $userData = [
