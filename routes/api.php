@@ -12,15 +12,12 @@
  */
 
 Route::group([
+    'middleware' => 'api',
     'prefix' => 'auth',
 ], function () {
-    Route::post('login', 'AuthController@login')->name('login');
-    Route::post('signup', 'AuthController@signup');
-
-    Route::group([
-        'middleware' => 'auth:api',
-    ], function () {
-        Route::get('logout', 'AuthController@logout');
-        Route::get('me', 'AuthController@me');
-    });
+    Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::get('me', 'AuthController@me');
 });
