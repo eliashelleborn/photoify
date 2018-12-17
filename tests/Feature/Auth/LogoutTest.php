@@ -13,9 +13,11 @@ class LogoutTest extends TestCase
      * Logout Tests
      * POST /api/auth/logout
      */
+
     public function testUnauthenticated()
     {
         $this->json('POST', 'api/auth/logout')
+            ->assertStatus(401)
             ->assertJson(["message" => "Unauthenticated."]);
     }
 
@@ -23,6 +25,7 @@ class LogoutTest extends TestCase
     {
         $user = $this->createTestUser();
         $this->json('POST', 'api/auth/logout', [], $this->authHeaders($user))
+            ->assertStatus(200)
             ->assertJson(["message" => "Successfully logged out"]);
     }
 }
