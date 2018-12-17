@@ -3,10 +3,13 @@
 namespace Tests\Feature;
 
 use App\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /**
      * Register Tests
      * POST /api/auth/Register
@@ -54,8 +57,6 @@ class RegisterTest extends TestCase
                 ],
             ]);
 
-        $user->delete();
-
     }
 
     public function testRegisterSuccessfully()
@@ -75,6 +76,5 @@ class RegisterTest extends TestCase
             ]);
 
         $user = User::where('email', 'testregister@test.com');
-        $user->delete();
     }
 }

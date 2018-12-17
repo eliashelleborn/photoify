@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /**
      * Login Tests
      * POST /api/auth/login
@@ -22,12 +24,9 @@ class LoginTest extends TestCase
 
     public function testLoginSuccessfully()
     {
-        $user = factory(User::class)->create([
-            'email' => 'testlogin@user.com',
-            'password' => '123',
-        ]);
+        $user = $this->createTestUser();
 
-        $payload = ['email' => 'testlogin@user.com', 'password' => '123'];
+        $payload = ['email' => 'test@user.com', 'password' => '123'];
 
         $this->json('POST', 'api/auth/login', $payload)
             ->assertStatus(200)
