@@ -20,3 +20,10 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');
 });
+
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/', 'UserController@index');
+    Route::get('{user}', 'UserController@show');
+    Route::put('{user}', 'UserController@update');
+    Route::post('{user}/update_avatar', 'UserController@updateAvatar');
+});
