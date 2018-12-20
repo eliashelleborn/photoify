@@ -34,7 +34,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $user;
+        return response()->json($user);
     }
 
     /**
@@ -75,9 +75,21 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
-        //
+        $forceDelete = $request->input('force_delete', false);
+
+        if ($user->id === Auth::user()->id) {
+            if ($forceDelete === true) {
+                $user->forceDelete();
+                return response()->json(['message' => 'Successfully deleted user', 'force_delete' => true]);
+            } else {
+                $user->delete();
+                return response()->json(['message' => 'Successfully deleted user', 'force_delete' => false]);
+            }
+        }
+
+        return response()->json(['message' => 'Unauthorized'], 401);
     }
 
     public function updateAvatar(Request $request)
