@@ -1,0 +1,77 @@
+
+// From Assignment GitHub
+Features:
+  ☐ As a user I should be able to create an account.
+  ☐ As a user I should be able to login.
+  ☐ As a user I should be able to logout.
+  ☐ As a user I should be able to edit my account email, password and biography.
+  ☐ As a user I should be able to upload a profile avatar image.
+  ☐ As a user I should be able to create new posts with image and description.
+  ☐ As a user I should be able to edit my posts.
+  ☐ As a user I should be able to delete my posts.
+  ☐ As a user I should be able to like and dislike posts.
+
+Extra:
+  ☐ As a user I should be able to follow and unfollow other users.
+  ☐ As a user I should be able to view a list of posts by users I follow.
+  ☐ As a user I should be able to comment on a post.
+  ☐ As a user I should be able to edit my comment.
+  ☐ As a user I should be able to delete my comment.
+  ☐ As a user I should be able to reply to my comments.
+  ☐ As a user I should be able to add filters to my images.
+  ☐ As a user I should be able to delete my account with all posts and comments.
+  ☐ As a user I should be able to reset my password with email.
+  ☐ As a user I should be able to view posts with a specific hashtag
+
+Requirements:
+  ☐ The project should implement nice looking graphical user interface.
+      // Note: You may use Bootstrap if you want to (without any custom jQuery code).
+  ✔ The application should be written in HTML, CSS, JavaScript and PHP. @done(18-12-17 15:40)
+  ☐ The application should be built using a SQLite database with at least three different tables.
+  ☐ The application should be pushed to a public repository on GitHub.
+  ☐ The application should be responsive and be built using the method mobile-first.
+  ✔ The application should be implement secure hashed passwords when signing up. @done(18-12-17 15:40)
+  ☐ The project's PHP files should declare strict types.
+      // Note: Strict types should only be declared in files that just contains PHP.
+  ☐ The project can't contain any PHP errors, warning or notices.
+      // Tip: If you haven't already, update your php.ini configuration to display errors.
+  ☐ The project must be tested on at least two of your classmates computers.
+      // Note: Add the testers name to the README.md file.
+  ☐ The repository should have at least 30 commits and not just one big commit.
+  ☐ The repository should contain the SQLite database file.
+  ☐ The repository must contain a README.md file with installation instructions and documentation.
+      // Tip: Visit awesome-readme to see a list of well written README.md files.
+  ✔ The repository must contain a LICENSE file. @done(18-12-17 15:41)
+      // Note: This is important when working with open-source software.
+  ✔ The repository must contain a .editorconfig file with your preferred settings. @done(18-12-17 15:41)
+      // Tip: Don't forget to install the EditorConfig package for Atom or your editor of choice.
+
+
+// Personal Todos
+API:
+  Tests:
+    // Controllers
+    ✔ Auth @done(18-12-17 15:42)
+    ☐ User
+
+  Routes:
+    Auth:
+      ✔ Login @done(18-12-17 15:42)
+      ✔ Logout @done(18-12-17 15:42)
+      ✔ Register @done(18-12-17 15:42)
+      ✔ Refresh Token @done(18-12-17 15:42)
+      ✔ Get authenticated user (me) @done(18-12-17 15:42)
+    User:
+      // Base
+      ☐ Get All / Search
+      ✔ Get One (by id) @done(18-12-17 16:14)
+      ☐ Update [email, password, bio, profile avatar image]
+      ☐ Delete
+      // Other
+      ☐ Follow / Unfollow
+      ☐ Get followers
+      ☐ Get following
+      ☐ Get liked posts
+
+
+Frontend:

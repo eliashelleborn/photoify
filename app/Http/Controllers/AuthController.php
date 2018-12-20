@@ -15,14 +15,20 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
+            'biography' => 'string|max:150',
+            'username' => 'required|string|min:5|max:32|unique:users',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string',
         ]);
+
         $user = new User([
             'name' => $request->name,
+            'biography' => $request->biography ?? '',
+            'username' => $request->username,
             'email' => $request->email,
             'password' => $request->password,
         ]);
+
         $user->save();
 
         $token = auth()->login($user);

@@ -35,16 +35,19 @@ class RegisterTest extends TestCase
             ]);
     }
 
-    public function testEmailHasAlreadyBeenTaken()
+    public function testEmailOrUsernameHasAlreadyBeenTaken()
     {
 
         $userData = [
             'email' => 'testregister@test.com',
+            'username' => 'TestUser',
             'name' => 'Test Register',
             'password' => '123',
         ];
 
         $user = factory(User::class)->create($userData);
+
+        $userData['username'] = 'NotTaken';
 
         $this->json('POST', 'api/auth/register', $userData)
             ->assertStatus(422)
@@ -57,12 +60,67 @@ class RegisterTest extends TestCase
                 ],
             ]);
 
+        $userData['username'] = 'TestUser';
+
+        $this->json('POST', 'api/auth/register', $userData)
+            ->assertStatus(422)
+            ->assertJson([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "username" => [
+                        "The username has already been taken.",
+                    ],
+                ],
+            ]);
+    }
+
+    public function testUsernameTooLong()
+    {
+        $userData = [
+            'email' => 'testregister@test.com',
+            'username' => 'ThisIsAVeryLongUsernameThatShouldCauseAnError',
+            'name' => 'Test Register',
+            'password' => '123',
+        ];
+
+        $this->json('POST', 'api/auth/register', $userData)
+            ->assertStatus(422)
+            ->assertJson([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "username" => [
+                        "The username may not be greater than 32 characters.",
+                    ],
+                ],
+            ]);
+    }
+
+    public function testUsernameTooShort()
+    {
+        $userData = [
+            'email' => 'testregister@test.com',
+            'username' => 'bla',
+            'name' => 'Test Register',
+            'password' => '123',
+        ];
+
+        $this->json('POST', 'api/auth/register', $userData)
+            ->assertStatus(422)
+            ->assertJson([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "username" => [
+                        "The username must be at least 5 characters.",
+                    ],
+                ],
+            ]);
     }
 
     public function testRegisterSuccessfully()
     {
         $userData = [
             'email' => 'testregister@test.com',
+            'username' => 'TestUser',
             'name' => 'Test Register',
             'password' => '123',
         ];
