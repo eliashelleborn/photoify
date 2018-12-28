@@ -29,10 +29,10 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
-    /* public function posts()
+    public function posts()
     {
-    return $this->hasMany('App\Post');
-    } */
+        return $this->hasMany('App\Post');
+    }
 
     /**
      * The attributes that should be mutated to dates.
