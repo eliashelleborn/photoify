@@ -92,9 +92,29 @@ class UserController extends Controller
         return response()->json(['message' => 'Unauthorized'], 401);
     }
 
-    public function updateAvatar(Request $request)
+    public function updateAvatar(Request $request, User $user)
     {
-        /* $path = Storage::putFile('public/avatars', $request->file('avatar'));
-    return response()->json(['message' => 'Saved avatar', 'path' => Storage::url($path)]); */
+        $path = Storage::putFile('public/avatars', $request->file('avatar'));
+        $authUser = Auth::user();
+        if ($user === $authUser) {
+            $user->avatar = Storage::url($path);
+            $user->save();
+            return response()->json(['message' => 'Saved avatar', 'path' => Storage::url($path)]);
+        }
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+
+    public function removeAvatar(Request $request, User $user)
+    {
+        if (isset($user)) {
+            if ($user->id === Auth::user()->id) {
+                $user->avatar = null;
+                $user->save();
+                return response()->json(['message' => 'Avatar removed']);
+            }
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        return response()->json(['message' => 'User not found'], 404);
     }
 }

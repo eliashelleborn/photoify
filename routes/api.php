@@ -27,4 +27,5 @@ Route::group(['prefix' => 'users'], function () {
     Route::put('{user}', 'UserController@update');
     Route::delete('{user}', 'UserController@destroy');
     Route::post('{user}/update_avatar', 'UserController@updateAvatar');
+    Route::post('{user}/remove_avatar', 'UserController@removeAvatar');
 });

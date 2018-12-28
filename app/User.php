@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'biography',
+        'name', 'username', 'email', 'password', 'biography', 'avatar',
     ];
 
     /**
@@ -28,6 +28,11 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /* public function posts()
+    {
+    return $this->hasMany('App\Post');
+    } */
 
     /**
      * The attributes that should be mutated to dates.
