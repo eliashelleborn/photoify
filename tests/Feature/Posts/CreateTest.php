@@ -10,9 +10,9 @@ use Tests\TestCase;
 /**
  * @testdox Posts\Create
  * @group posts
- * @group create
+ * @group posts-create
  */
-class PostTest extends TestCase
+class PostsCreateTest extends TestCase
 {
     use DatabaseMigrations;
 

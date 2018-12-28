@@ -34,4 +34,5 @@ Route::group(['prefix' => 'users'], function () {
 Route::group(['prefix' => 'posts'], function () {
     Route::get('/', 'PostController@index');
     Route::post('/', 'PostController@store');
+    Route::get('{post}', 'PostController@show');
 });
