@@ -5,6 +5,11 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
+/**
+ * @testdox Auth\Login
+ * @group auth
+ * @group login
+ */
 class LoginTest extends TestCase
 {
     use DatabaseMigrations;
@@ -13,6 +18,7 @@ class LoginTest extends TestCase
      * Login Tests
      * POST /api/auth/login
      */
+
     public function testRequiresEmailAndPassword()
     {
         $this->json('POST', 'api/auth/login')

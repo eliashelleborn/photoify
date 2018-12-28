@@ -6,6 +6,11 @@ use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
+/**
+ * @testdox Auth\Register
+ * @group auth
+ * @group register
+ */
 class RegisterTest extends TestCase
 {
     use DatabaseMigrations;

@@ -5,6 +5,11 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
+/**
+ * @testdox Auth\Logout
+ * @group auth
+ * @group logout
+ */
 class LogoutTest extends TestCase
 {
     use DatabaseMigrations;

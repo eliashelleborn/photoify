@@ -5,6 +5,11 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
+/**
+ * @testdox Auth\RefreshToken
+ * @group auth
+ * @group refreshtoken
+ */
 class RefreshTokenTest extends TestCase
 {
     use DatabaseMigrations;
@@ -13,6 +18,7 @@ class RefreshTokenTest extends TestCase
      * Logout Tests
      * POST /api/auth/logout
      */
+
     public function testUnauthenticated()
     {
         $this->json('POST', 'api/auth/refresh')
