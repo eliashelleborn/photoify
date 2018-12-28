@@ -11,9 +11,8 @@
 |
  */
 
-Route::group([
-    'prefix' => 'auth',
-], function () {
+// AUTH
+Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'AuthController@login')->name('login');
     Route::post('register', 'AuthController@register');
     Route::post('logout', 'AuthController@logout');
@@ -21,6 +20,7 @@ Route::group([
     Route::get('me', 'AuthController@me');
 });
 
+// USER
 Route::group(['prefix' => 'users'], function () {
     Route::get('/', 'UserController@index');
     Route::get('{user}', 'UserController@show');
@@ -28,4 +28,10 @@ Route::group(['prefix' => 'users'], function () {
     Route::delete('{user}', 'UserController@destroy');
     Route::post('{user}/update_avatar', 'UserController@updateAvatar');
     Route::post('{user}/remove_avatar', 'UserController@removeAvatar');
+});
+
+// POST
+Route::group(['prefix' => 'posts'], function () {
+    Route::get('/', 'PostController@index');
+    Route::post('/', 'PostController@store');
 });
