@@ -29,9 +29,17 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    /**
+     * Relations
+     */
     public function posts()
     {
         return $this->hasMany('App\Post');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany('App\Vote');
     }
 
     /**

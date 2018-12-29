@@ -24,8 +24,16 @@ class Post extends Model
         'user_id' => 'int',
     ];
 
+    /**
+     * Relations
+     */
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany('App\Vote');
     }
 }
