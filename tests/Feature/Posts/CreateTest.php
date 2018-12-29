@@ -67,7 +67,7 @@ class PostsCreateTest extends TestCase
     }
 
     /**
-     * @testdox Try creating post without an image (Error)
+     * @testdox No Image provided (Error)
      */
     public function testCreatePostNoImageProvided()
     {
@@ -90,9 +90,9 @@ class PostsCreateTest extends TestCase
     }
 
     /**
-     * @testdox Try creating post with invalid filetype (Error)
+     * @testdox File provided must be an image (Error)
      */
-    public function testCreatePostInvalidImageFiletype()
+    public function testFileProvidedMustBeAnImage()
     {
         $user = $this->createTestUser();
 
