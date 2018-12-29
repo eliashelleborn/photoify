@@ -72,7 +72,7 @@ class PostController extends Controller
     {
         if ($post->user_id === Auth::user()->id) {
             $request->validate([
-                'image' => 'required|file|image',
+                'image' => 'file|image',
                 'description' => 'nullable|string|max:150',
             ]);
 
