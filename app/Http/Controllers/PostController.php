@@ -70,7 +70,25 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        if ($post->user_id === Auth::user()->id) {
+            $request->validate([
+                'image' => 'required|file|image',
+                'description' => 'nullable|string|max:150',
+            ]);
+
+            if (isset($request->image)) {
+                $path = Storage::putFile('public/posts', $request->file('image'));
+                $post->image = Storage::url($path);
+            }
+
+            $post->description = $request->description ?? $post->description;
+
+            $post->save();
+
+            return response()->json(['message' => 'Successfully updated post', 'post' => $post]);
+        }
+
+        return response()->json(['message' => 'Unauthorized'], 401);
     }
 
     /**
@@ -81,6 +99,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if ($post->user_id === Auth::user()->id) {
+            $post->delete();
+            return response()->json(['message' => 'Successfully deleted post']);
+        }
+        return response()->json(['message' => 'Unauthorized'], 401);
     }
 }
