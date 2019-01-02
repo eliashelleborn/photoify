@@ -28,6 +28,9 @@ Route::group(['prefix' => 'users'], function () {
     Route::delete('{user}', 'UserController@destroy');
     Route::post('{user}/update_avatar', 'UserController@updateAvatar');
     Route::post('{user}/remove_avatar', 'UserController@removeAvatar');
+
+    // User - Votes
+
 });
 
 // POST
@@ -37,4 +40,7 @@ Route::group(['prefix' => 'posts'], function () {
     Route::get('{post}', 'PostController@show');
     Route::put('{post}', 'PostController@update');
     Route::delete('{post}', 'PostController@destroy');
+
+    // Post - Votes
+    Route::post('{post}/votes', 'VoteController@store');
 });
