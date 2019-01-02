@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
 
 class Post extends Model
 {
@@ -29,11 +30,11 @@ class Post extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
 
     public function votes()
     {
-        return $this->hasMany('App\Vote');
+        return $this->morphMany(Vote::class, 'voted');
     }
 }

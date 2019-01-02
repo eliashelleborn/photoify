@@ -16,15 +16,12 @@ class CreateVotesTable extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('type', ['like', 'dislike']);
-            $table->timestamps();
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
-            $table->integer('post_id')->unsigned();
-            $table->foreign('post_id')
-                ->references('id')->on('posts')
-                ->onDelete('cascade');
+            $table->integer('voted_id')->unsigned();
+            $table->string('voted_type');
+            $table->timestamps();
+
+            $table->unique(['user_id', 'voted_id', 'voted_type']);
         });
     }
 
