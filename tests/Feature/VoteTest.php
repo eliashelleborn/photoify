@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Post;
+use App\Vote;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -97,4 +98,53 @@ class VoteTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors('type');
     }
+
+    /**
+     * @test
+     */
+    public function user_can_remove_vote()
+    {
+        $user = $this->createUser();
+        $post = factory(Post::class)->create();
+        $vote = factory(Vote::class)->create([
+            'user_id' => $user->id,
+            'voted_id' => $post->id,
+            'voted_type' => get_class($post),
+        ]);
+        
+
+        $this->json('POST', 'api/posts/' . $vote->voted_id . '/votes?_method=DELETE', [], $this->authHeaders($user))
+            ->assertJson(['message' => 'Successfully removed vote']);
+
+        $this->assertDatabaseMissing('votes', ['voted_id' => $vote->voted_id, 'user_id' => $vote->user_id]);
+    }
+
+    /**
+     * @test
+     */
+    public function remove_vote_requires_user_to_have_voted()
+    {
+        $user = $this->createUser();
+        $post = factory(Post::class)->create();
+        
+
+        $this->json('POST', 'api/posts/' . $post->id . '/votes?_method=DELETE', [], $this->authHeaders($user))
+            ->assertStatus(400)
+            ->assertJson(['message' => 'You havent voted yet']);
+    }
+
+    /**
+     * @test
+     */
+    public function guest_can_not_remove_vote()
+    {
+        $vote = factory(Vote::class)->create();
+
+        $this->json('POST', 'api/posts/' . $vote->voted_id . '/votes?_method=DELETE')
+            ->assertStatus(401)
+            ->assertJson(['message' => 'Unauthenticated.']);
+
+        $this->assertDatabaseHas('votes', ['voted_id' => $vote->voted_id, 'user_id' => $vote->user_id]);
+    }
+
 }
