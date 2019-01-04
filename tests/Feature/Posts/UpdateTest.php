@@ -37,16 +37,10 @@ class PostsUpdateTest extends TestCase
         $this->json('POST', 'api/posts/' . $post->id . '?_method=PUT', $body, $this->authHeaders($user))
             ->assertStatus(200)
             ->assertJsonStructure([
-                'message',
-                'post' => [
-                    'id', 'description', 'image', 'user_id', 'created_at', 'updated_at',
-                ],
+                'id', 'description', 'image', 'user_id', 'created_at', 'updated_at',
             ])
             ->assertJson([
-                'message' => 'Successfully updated post',
-                'post' => [
-                    'description' => 'New description',
-                ],
+                'description' => 'New description',
             ]);
     }
 
@@ -73,16 +67,10 @@ class PostsUpdateTest extends TestCase
         $this->json('POST', 'api/posts/' . $post->id . '?_method=PUT', $body, $this->authHeaders($user))
             ->assertStatus(200)
             ->assertJsonStructure([
-                'message',
-                'post' => [
-                    'id', 'description', 'image', 'user_id', 'created_at', 'updated_at',
-                ],
+                'id', 'description', 'image', 'user_id', 'created_at', 'updated_at',
             ])
             ->assertJson([
-                'message' => 'Successfully updated post',
-                'post' => [
-                    'image' => '/storage/posts/' . $newFile->hashName(),
-                ],
+                'image' => '/storage/posts/' . $newFile->hashName(),
             ]);
 
         Storage::disk('public')->assertExists('posts/' . $newFile->hashName());

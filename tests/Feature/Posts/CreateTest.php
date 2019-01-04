@@ -78,13 +78,7 @@ class PostsCreateTest extends TestCase
 
         $this->json('POST', 'api/posts/', ['image' => null], $this->authHeaders($user))
             ->assertStatus(422)
-            ->assertJson([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    "image" => [
-                        "The image field is required.",
-                    ],
-                ]]);
+            ->assertJsonValidationErrors('image');
 
         Storage::disk('public')->assertMissing('posts/' . $file->hashName());
     }
@@ -101,13 +95,7 @@ class PostsCreateTest extends TestCase
 
         $this->json('POST', 'api/posts/', ['image' => $file], $this->authHeaders($user))
             ->assertStatus(422)
-            ->assertJson([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    "image" => [
-                        "The image must be an image.",
-                    ],
-                ]]);
+            ->assertJsonValidationErrors('image');
 
         Storage::disk('public')->assertMissing('posts/' . $file->hashName());
     }

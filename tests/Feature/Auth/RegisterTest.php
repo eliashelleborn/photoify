@@ -24,20 +24,7 @@ class RegisterTest extends TestCase
     {
         $this->json('POST', 'api/auth/register')
             ->assertStatus(422)
-            ->assertJson([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    "name" => [
-                        "The name field is required.",
-                    ],
-                    "email" => [
-                        "The email field is required.",
-                    ],
-                    "password" => [
-                        "The password field is required.",
-                    ],
-                ],
-            ]);
+            ->assertJsonValidationErrors(['username', 'name', 'email', 'password']);
     }
 
     public function testEmailOrUsernameHasAlreadyBeenTaken()
@@ -56,27 +43,16 @@ class RegisterTest extends TestCase
 
         $this->json('POST', 'api/auth/register', $userData)
             ->assertStatus(422)
-            ->assertJson([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    "email" => [
-                        "The email has already been taken.",
-                    ],
-                ],
-            ]);
+            ->assertJsonMissingValidationErrors(['username', 'name', 'password'])
+            ->assertJsonValidationErrors('email');
 
+        $userData['email'] = 'nottaken@test.com';
         $userData['username'] = 'TestUser';
 
         $this->json('POST', 'api/auth/register', $userData)
             ->assertStatus(422)
-            ->assertJson([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    "username" => [
-                        "The username has already been taken.",
-                    ],
-                ],
-            ]);
+            ->assertJsonMissingValidationErrors(['email', 'name', 'password'])
+            ->assertJsonValidationErrors('username');
     }
 
     public function testUsernameTooLong()
@@ -90,14 +66,8 @@ class RegisterTest extends TestCase
 
         $this->json('POST', 'api/auth/register', $userData)
             ->assertStatus(422)
-            ->assertJson([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    "username" => [
-                        "The username may not be greater than 32 characters.",
-                    ],
-                ],
-            ]);
+            ->assertJsonMissingValidationErrors(['email', 'name', 'password'])
+            ->assertJsonValidationErrors('username');
     }
 
     public function testUsernameTooShort()
@@ -111,14 +81,8 @@ class RegisterTest extends TestCase
 
         $this->json('POST', 'api/auth/register', $userData)
             ->assertStatus(422)
-            ->assertJson([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    "username" => [
-                        "The username must be at least 5 characters.",
-                    ],
-                ],
-            ]);
+            ->assertJsonMissingValidationErrors(['email', 'name', 'password'])
+            ->assertJsonValidationErrors('username');
     }
 
     public function testRegisterSuccessfully()

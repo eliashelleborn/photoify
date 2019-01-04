@@ -85,7 +85,7 @@ class PostController extends Controller
 
             $post->save();
 
-            return response()->json(['message' => 'Successfully updated post', 'post' => $post]);
+            return response()->json($post);
         }
 
         return response()->json(['message' => 'Unauthorized'], 401);

@@ -30,7 +30,7 @@ class PostsGetTest extends TestCase
     }
 
     /**
-     * @testdox Provided Post ID not found (404)
+     * @testdox Provided post ID not found (404)
      */
     public function testProvidedPostIdNotFound()
     {
