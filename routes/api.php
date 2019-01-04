@@ -31,6 +31,7 @@ Route::group(['prefix' => 'users'], function () {
 
     // User - Votes
 
+    // User - Follows
 });
 
 // POST
@@ -43,4 +44,5 @@ Route::group(['prefix' => 'posts'], function () {
 
     // Post - Votes
     Route::post('{post}/votes', 'VoteController@store');
+    Route::delete('{post}/votes', 'VoteController@destroy');
 });

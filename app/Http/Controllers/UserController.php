@@ -99,7 +99,7 @@ class UserController extends Controller
         if ($user === $authUser) {
             $user->avatar = Storage::url($path);
             $user->save();
-            return response()->json(['message' => 'Saved avatar', 'path' => Storage::url($path)]);
+            return response()->json($user);
         }
         return response()->json(['message' => 'Unauthorized'], 401);
     }
@@ -110,7 +110,7 @@ class UserController extends Controller
             if ($user->id === Auth::user()->id) {
                 $user->avatar = null;
                 $user->save();
-                return response()->json(['message' => 'Avatar removed']);
+                return response()->json($user);
             }
             return response()->json(['message' => 'Unauthorized'], 401);
         }

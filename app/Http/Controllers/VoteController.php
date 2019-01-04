@@ -33,8 +33,12 @@ class VoteController extends Controller
         return response()->json(['message' => 'You have already voted'], 400);
     }
 
-    public function deleteVote()
+    public function destroy(Post $post)
     {
-
+        if ($post->votes()->where('user_id', Auth::id())->exists()) {
+            $post->votes()->where('user_id', Auth::id())->delete();
+            return response()->json(['message' => 'Successfully removed vote']);
+        }
+        return response()->json(['message' => 'You havent voted yet'], 400);
     }
 }
