@@ -34,14 +34,14 @@ class User extends Authenticatable implements JWTSubject
      */
     public function posts()
     {
-        return $this->hasMany('App\Post');
+        return $this->hasMany(Post::class);
     }
 
-    public function votes()
+    /*  public function votes()
     {
-        return $this->hasMany('App\Vote');
+    return $this->hasMany('App\Vote', 'votes', 'user_id', 'post_id')->withTimestamps();
     }
-
+     */
     /**
      * The attributes that should be mutated to dates.
      *
