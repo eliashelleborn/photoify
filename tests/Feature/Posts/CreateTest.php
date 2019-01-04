@@ -17,11 +17,11 @@ class PostsCreateTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * @testdox Create post
+     * @test
      */
-    public function testCreatePost()
+    public function user_can_create_post()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
 
         Storage::fake('posts');
         $file = UploadedFile::fake()->image('post.jpg');
@@ -42,11 +42,11 @@ class PostsCreateTest extends TestCase
     }
 
     /**
-     * @testdox Create post without description
+     * @test
      */
-    public function testCreatePostWithoutDescription()
+    public function post_description_is_optional()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
 
         Storage::fake('posts');
         $file = UploadedFile::fake()->image('post.jpg');
@@ -67,11 +67,11 @@ class PostsCreateTest extends TestCase
     }
 
     /**
-     * @testdox No Image provided (Error)
+     * @test
      */
-    public function testCreatePostNoImageProvided()
+    public function post_requires_image()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
 
         Storage::fake('posts');
         $file = UploadedFile::fake()->image('post.jpg');
@@ -84,11 +84,11 @@ class PostsCreateTest extends TestCase
     }
 
     /**
-     * @testdox File provided must be an image (Error)
+     * @test
      */
-    public function testFileProvidedMustBeAnImage()
+    public function post_requires_correct_image_filetype()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
 
         Storage::fake('posts');
         $file = UploadedFile::fake()->create('post.pdf');

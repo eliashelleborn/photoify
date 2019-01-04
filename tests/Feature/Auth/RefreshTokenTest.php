@@ -19,16 +19,22 @@ class RefreshTokenTest extends TestCase
      * POST /api/auth/logout
      */
 
-    public function testUnauthenticated()
+    /**
+     * @test
+     */
+    public function guest_can_not_refresh_token()
     {
         $this->json('POST', 'api/auth/refresh')
             ->assertStatus(401)
             ->assertJson(["message" => "Unauthenticated."]);
     }
 
-    public function testRefreshTokenSuccessfully()
+    /**
+     * @test
+     */
+    public function user_can_refresh_token()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
         $this->json('POST', 'api/auth/refresh', [], $this->authHeaders($user))
             ->assertStatus(200)
             ->assertJsonStructure([

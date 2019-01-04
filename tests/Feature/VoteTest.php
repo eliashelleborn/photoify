@@ -18,9 +18,9 @@ class VoteTest extends TestCase
     /**
      * @test
      */
-    public function authenticated_user_can_like_posts()
+    public function user_can_like_posts()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
         $post = factory(Post::class)->create();
 
         $postData = [
@@ -36,9 +36,9 @@ class VoteTest extends TestCase
     /**
      * @test
      */
-    public function authenticated_user_can_dislike_posts()
+    public function user_can_dislike_posts()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
         $post = factory(Post::class)->create();
 
         $postData = [
@@ -56,7 +56,7 @@ class VoteTest extends TestCase
      */
     public function user_can_only_vote_on_post_once()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
         $post = factory(Post::class)->create();
 
         $postData = ['type' => 'like'];
@@ -86,9 +86,9 @@ class VoteTest extends TestCase
     /**
      * @test
      */
-    public function invalid_vote_type_returns_an_error()
+    public function vote_requires_valid_type()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
         $post = factory(Post::class)->create();
 
         $postData = ['type' => 'blablabla'];

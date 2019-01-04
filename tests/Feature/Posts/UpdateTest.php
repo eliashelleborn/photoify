@@ -18,11 +18,11 @@ class PostsUpdateTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * @testdox Update post description
+     * @test
      */
-    public function testUpdatePostDescription()
+    public function user_can_update_post_description()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
 
         Storage::fake('posts');
         $file = UploadedFile::fake()->image('post.jpg');
@@ -45,11 +45,11 @@ class PostsUpdateTest extends TestCase
     }
 
     /**
-     * @testdox Update post image
+     * @test
      */
-    public function testUpdatePostImage()
+    public function user_can_update_post_image()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
 
         Storage::fake('posts');
         $file = UploadedFile::fake()->image('originalImage.jpg');
@@ -79,11 +79,11 @@ class PostsUpdateTest extends TestCase
     }
 
     /**
-     * @testdox Unauthorized to update other users post
+     * @test
      */
-    public function testUpdatePostUnauthorized()
+    public function user_can_not_update_other_users_post()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
         $post = factory(Post::class)->create();
 
         $body = ['description' => 'New description'];

@@ -20,16 +20,21 @@ class RegisterTest extends TestCase
      * POST /api/auth/Register
      */
 
-    public function testFieldsRequired()
+    /**
+     * @test
+     */
+    public function register_required_fields()
     {
         $this->json('POST', 'api/auth/register')
             ->assertStatus(422)
             ->assertJsonValidationErrors(['username', 'name', 'email', 'password']);
     }
 
-    public function testEmailOrUsernameHasAlreadyBeenTaken()
+    /**
+     * @test
+     */
+    public function register_requires_unique_email_and_username()
     {
-
         $userData = [
             'email' => 'testregister@test.com',
             'username' => 'TestUser',
@@ -55,7 +60,10 @@ class RegisterTest extends TestCase
             ->assertJsonValidationErrors('username');
     }
 
-    public function testUsernameTooLong()
+    /**
+     * @test
+     */
+    public function register_requires_username_with_max_length_32()
     {
         $userData = [
             'email' => 'testregister@test.com',
@@ -70,7 +78,10 @@ class RegisterTest extends TestCase
             ->assertJsonValidationErrors('username');
     }
 
-    public function testUsernameTooShort()
+    /**
+     * @test
+     */
+    public function register_requires_username_with_min_length_5()
     {
         $userData = [
             'email' => 'testregister@test.com',
@@ -85,7 +96,10 @@ class RegisterTest extends TestCase
             ->assertJsonValidationErrors('username');
     }
 
-    public function testRegisterSuccessfully()
+    /**
+     * @test
+     */
+    public function can_register()
     {
         $userData = [
             'email' => 'testregister@test.com',

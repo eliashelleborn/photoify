@@ -10,7 +10,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    protected function createTestUser(): object
+    protected function createUser(): object
     {
         $user = factory(User::class)->create([
             'email' => 'test@user.com',

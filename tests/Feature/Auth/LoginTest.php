@@ -19,18 +19,38 @@ class LoginTest extends TestCase
      * POST /api/auth/login
      */
 
-    public function testRequiresEmailAndPassword()
+    /**
+     * @test
+     */
+    public function login_requires_email_and_password()
     {
         $this->json('POST', 'api/auth/login')
-            ->assertStatus(401)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['email', 'password']);
+    }
+
+    /**
+     * @test
+     */
+    public function login_requires_valid_credentials()
+    {
+        $user = $this->createUser();
+
+        $payload = ['email' => 'wrongemail@test.com', 'password' => 'invalidpassword'];
+
+        $this->json('POST', 'api/auth/login', $payload)
+            ->assertStatus(400)
             ->assertJson([
-                'error' => 'Unauthorized',
+                'message' => 'Invalid credentials',
             ]);
     }
 
-    public function testLoginSuccessfully()
+    /**
+     * @test
+     */
+    public function can_login()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
 
         $payload = ['email' => 'test@user.com', 'password' => '123'];
 
@@ -41,7 +61,5 @@ class LoginTest extends TestCase
                 'token_type',
                 'expires_in',
             ]);
-
-        $user->delete();
     }
 }

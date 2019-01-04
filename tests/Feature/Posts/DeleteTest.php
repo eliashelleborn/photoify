@@ -18,11 +18,11 @@ class PostsDeleteTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * @testdox Delete post
+     * @test
      */
-    public function testDeletePost()
+    public function user_can_delete_post()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
 
         Storage::fake('posts');
         $file = UploadedFile::fake()->image('post.jpg');
@@ -42,11 +42,11 @@ class PostsDeleteTest extends TestCase
     }
 
     /**
-     * @testdox Unauthorized to delete other users post
+     * @test
      */
-    public function testDeletePostUnauthorized()
+    public function user_can_not_delete_other_users_post()
     {
-        $user = $this->createTestUser();
+        $user = $this->createUser();
         $post = factory(Post::class)->create();
 
         $this->json('POST', 'api/posts/' . $post->id . '?_method=DELETE', [], $this->authHeaders($user))

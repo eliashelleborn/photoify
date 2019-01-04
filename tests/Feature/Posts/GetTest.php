@@ -16,9 +16,9 @@ class PostsGetTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * @testdox Get post by ID
+     * @test
      */
-    public function testGetPostById()
+    public function can_get_post_by_id()
     {
         $post = factory(Post::class)->create();
 
@@ -30,9 +30,9 @@ class PostsGetTest extends TestCase
     }
 
     /**
-     * @testdox Provided post ID not found (404)
+     * @test
      */
-    public function testProvidedPostIdNotFound()
+    public function post_not_found()
     {
         $this->json('GET', 'api/posts/' . 999)
             ->assertStatus(404);
