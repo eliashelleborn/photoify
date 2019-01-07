@@ -30,6 +30,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('{user}/remove_avatar', 'UserController@removeAvatar');
 
     // User - Votes
+    Route::get('{user}/votes', 'UserController@votes');
 
     // User - Follows
 });

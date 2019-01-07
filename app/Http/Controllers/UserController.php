@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'show']]);
+        $this->middleware('auth:api', ['except' => ['index', 'show', 'votes']]);
     }
 
     /**
@@ -116,5 +116,10 @@ class UserController extends Controller
         }
 
         return response()->json(['message' => 'User not found'], 404);
+    }
+
+    public function votes(Request $request, User $user)
+    {
+        return $user->votes;
     }
 }
