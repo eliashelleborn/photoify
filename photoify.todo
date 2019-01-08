@@ -27,8 +27,8 @@ Requirements:
   ☐ The project should implement nice looking graphical user interface.
       // Note: You may use Bootstrap if you want to (without any custom jQuery code).
   ✔ The application should be written in HTML, CSS, JavaScript and PHP. @done(18-12-17 15:40)
-  ☐ The application should be built using a SQLite database with at least three different tables.
-  ☐ The application should be pushed to a public repository on GitHub.
+  ✔ The application should be built using a SQLite database with at least three different tables. @done(19-01-07 14:38)
+  ✔ The application should be pushed to a public repository on GitHub. @done(19-01-07 14:37)
   ☐ The application should be responsive and be built using the method mobile-first.
   ✔ The application should be implement secure hashed passwords when signing up. @done(18-12-17 15:40)
   ☐ The project's PHP files should declare strict types.
@@ -37,7 +37,7 @@ Requirements:
       // Tip: If you haven't already, update your php.ini configuration to display errors.
   ☐ The project must be tested on at least two of your classmates computers.
       // Note: Add the testers name to the README.md file.
-  ☐ The repository should have at least 30 commits and not just one big commit.
+  ✔ The repository should have at least 30 commits and not just one big commit. @done(19-01-07 14:37)
   ☐ The repository should contain the SQLite database file.
   ☐ The repository must contain a README.md file with installation instructions and documentation.
       // Tip: Visit awesome-readme to see a list of well written README.md files.
@@ -49,29 +49,55 @@ Requirements:
 
 // Personal Todos
 API:
-  Tests:
-    // Controllers
-    ✔ Auth @done(18-12-17 15:42)
-    ☐ User
-
   Routes:
     Auth:
       ✔ Login @done(18-12-17 15:42)
       ✔ Logout @done(18-12-17 15:42)
       ✔ Register @done(18-12-17 15:42)
-      ✔ Refresh Token @done(18-12-17 15:42)
+      ☐ Refresh Token
       ✔ Get authenticated user (me) @done(18-12-17 15:42)
     User:
       // Base
       ☐ Get All / Search
       ✔ Get One (by id) @done(18-12-17 16:14)
-      ☐ Update [email, password, bio, profile avatar image]
-      ☐ Delete
-      // Other
+      ✔ Update [email, password, bio, profile avatar image] @done(19-01-07 14:34)
+      ✔ Delete @done(19-01-07 14:34)
+      // Extra
       ☐ Follow / Unfollow
-      ☐ Get followers
-      ☐ Get following
-      ☐ Get liked posts
+      ☐ Get followers + followers count
+      ☐ Get following + following count
+      ☐ Get liked post
+    Post:
+      ☐ Get One
+      ☐ Feed
+      ✔ Create @done(19-01-07 14:36)
+      ✔ Update @done(19-01-07 14:36)
+      ✔ Delete @done(19-01-07 14:36)
+      ☐ Get votes + vote count
 
 
 Frontend:
+  Auth:
+    ☐ Login
+    ☐ Register
+    ☐ Logout (In nav?)
+    ☐ Auto login with token
+    ☐ Global auth state
+    ☐ Refresh token
+
+  Post:
+    ☐ Home / Feed
+    ☐ Single Post
+    ☐ Create / Update Post
+    ☐ Delete popup
+    Vote:
+      ☐ Vote stats
+      ☐ Vote buttons
+      ☐
+
+  User:
+    ☐ Profile page
+    ☐ Followers list
+    ☐ Following list
+    ☐ Liked/Disliked posts list
+    ☐ Settings / Update profile (Including delete user)
