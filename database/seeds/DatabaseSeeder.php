@@ -1,5 +1,6 @@
 <?php
 
+use App\Follow;
 use App\Post;
 use App\User;
 use App\Vote;
@@ -42,5 +43,8 @@ class DatabaseSeeder extends Seeder
                 });
             });
         });
+
+        factory(Follow::class)->create(['follower_id' => 1, 'followee_id' => 2]);
+
     }
 }
