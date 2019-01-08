@@ -21,7 +21,15 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+        return Post::with('user')->get();
+    }
+
+    public function feed()
+    {
+        $userIds = Auth::user()->following()->pluck('followee_id');
+        $userIds[] = Auth::id();
+        $posts = Post::whereIn('user_id', $userIds)->latest()->get();
+        return response()->json($posts);
     }
 
     /**
