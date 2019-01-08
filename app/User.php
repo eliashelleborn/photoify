@@ -42,6 +42,25 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Vote::class, 'user_id');
     }
 
+    public function followers()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'follows',
+            'followee_id',
+            'follower_id'
+        );
+    }
+    public function following()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'follows',
+            'follower_id',
+            'followee_id'
+        );
+    }
+
     /**
      * The attributes that should be mutated to dates.
      *

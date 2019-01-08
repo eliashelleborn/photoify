@@ -33,6 +33,8 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('{user}/votes', 'UserController@votes');
 
     // User - Follows
+    Route::get('{user}/followers', 'FollowController@followers');
+    Route::get('{user}/following', 'FollowController@following');
 });
 
 // POST
