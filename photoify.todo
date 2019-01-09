@@ -49,6 +49,14 @@ Requirements:
 
 // Personal Todos
 API:
+  Tests:
+    ✔ Auth @done(19-01-08 12:06)
+    ✔ User @done(19-01-08 12:06)
+    ✔ Post @done(19-01-08 12:06)
+    ✔ Vote @done(19-01-08 12:06)
+    ☐ Feed
+    ☐ Follow
+
   Routes:
     Auth:
       ✔ Login @done(18-12-17 15:42)
