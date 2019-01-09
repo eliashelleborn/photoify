@@ -37,6 +37,9 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('{user}/following', 'FollowController@following');
 });
 
+// Feed
+Route::get('/feed', 'PostController@feed');
+
 // POST
 Route::group(['prefix' => 'posts'], function () {
     Route::get('/', 'PostController@index');
