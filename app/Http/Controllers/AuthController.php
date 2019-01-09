@@ -67,7 +67,7 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         $user = auth()->user();
-        return response()->json([$user, auth()->payload()]);
+        return response()->json($user);
     }
 
     protected function respondWithToken($token)

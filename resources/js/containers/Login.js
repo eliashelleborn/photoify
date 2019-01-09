@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { Field, Label } from '../components/Form';
 import { Button } from '../components/Button';
 import axios from 'axios';
+import { useAction, useStore } from 'easy-peasy';
 
 const StyledLogin = styled.div`
   display: flex;
@@ -24,6 +25,8 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = props => {
+  const authActions = useAction(dispatch => dispatch.auth);
+  const authState = useStore(state => state.auth);
   const [redirect, setRedirect] = useState(false);
 
   if (redirect) return <Redirect to="/" />;
@@ -41,6 +44,8 @@ const Login = props => {
           try {
             const res = await axios.post('/api/auth/login', values);
             localStorage.setItem('access_token', res.data.access_token);
+            authActions.setToken(res.data.access_token);
+            authActions.tokenAuthenticate();
             setRedirect(true);
           } catch ({ response: res }) {
             actions.setErrors({ api: res.data });
