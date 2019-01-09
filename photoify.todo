@@ -58,11 +58,13 @@ API:
     ☐ Follow
 
   Routes:
+    ☐ Search (Users & Posts)
+    ☐ Notifications / Activities
     Auth:
       ✔ Login @done(18-12-17 15:42)
       ✔ Logout @done(18-12-17 15:42)
       ✔ Register @done(18-12-17 15:42)
-      ☐ Refresh Token
+      ✔ Refresh Token @done(19-01-09 21:19)
       ✔ Get authenticated user (me) @done(18-12-17 15:42)
     User:
       // Base
@@ -72,25 +74,27 @@ API:
       ✔ Delete @done(19-01-07 14:34)
       // Extra
       ☐ Follow / Unfollow
-      ☐ Get followers + followers count
-      ☐ Get following + following count
+      ✔ Get followers @done(19-01-09 21:21)
+      ✔ Get following @done(19-01-09 21:21)
       ☐ Get liked post
+      ☐ Include follow stats with user
     Post:
       ☐ Get One
-      ☐ Feed
+      ✔ Feed @done(19-01-09 21:21)
       ✔ Create @done(19-01-07 14:36)
       ✔ Update @done(19-01-07 14:36)
       ✔ Delete @done(19-01-07 14:36)
       ☐ Get votes + vote count
+      ☐ Hashtags, mentions
 
 
 Frontend:
   Auth:
-    ☐ Login
+    ✔ Login @done(19-01-09 21:20)
     ☐ Register
-    ☐ Logout (In nav?)
-    ☐ Auto login with token
-    ☐ Global auth state
+    ✔ Logout @done(19-01-09 21:20)
+    ✔ Auto login with token @done(19-01-09 21:20)
+    ✔ Global auth state @done(19-01-09 21:20)
     ☐ Refresh token
 
   Post:
