@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { StoreProvider, useStore, useAction } from 'easy-peasy';
 
 import ProtectedRoute from '../utils/ProtectedRoute';
@@ -12,6 +12,9 @@ import Home from './Home';
 import NotFound from './NotFound';
 import Login from './Login';
 import Profile from './Profile';
+
+// Components
+import Navbar from '../components/Navbar';
 
 const App = () => {
   const authState = useStore(state => state.auth);
@@ -36,29 +39,16 @@ const App = () => {
     <Router>
       {!authState.isLoading && (
         <div>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to={`/${authState.authenticatedUser.username}`}>
-                My Profile
-              </Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          </ul>
+          <Navbar />
 
-          {authState.isAuthenticated && (
-            <button onClick={() => authActions.logout()}>Logout</button>
-          )}
+          {/* ===== ROUTES ===== */}
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <AuthenticationRoute path="/login" component={Login} />
+            <Route path="/404" component={NotFound} />
 
-          <Route path="/" exact component={Home} />
-          <Route path="/404" component={NotFound} />
-          {/*  <ProtectedRoute path="/protected" component={ProtectedPage} /> */}
-          <AuthenticationRoute path="/login" component={Login} />
-          <Route path="/:username" component={Profile} />
+            <Route path="/:username" component={Profile} />
+          </Switch>
         </div>
       )}
     </Router>
