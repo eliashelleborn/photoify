@@ -6,28 +6,12 @@ import { StoreProvider, useStore, useAction } from 'easy-peasy';
 import ProtectedRoute from '../utils/ProtectedRoute';
 import AuthenticationRoute from '../utils/AuthenticationRoute';
 import store from '../store';
+
+// Containers
+import Home from './Home';
+import NotFound from './NotFound';
 import Login from './Login';
-
-const Home = () => {
-  const auth = useStore(state => state.auth);
-  return (
-    <div>
-      <h1>Home</h1>
-    </div>
-  );
-};
-
-const ProtectedPage = () => {
-  const authenticatedUser = useStore(state => state.auth.authenticatedUser);
-  return (
-    <div>
-      <h1>Protected Page</h1>
-      <p>{authenticatedUser.email}</p>
-      <p>{authenticatedUser.username}</p>
-      <p>{authenticatedUser.name}</p>
-    </div>
-  );
-};
+import Profile from './Profile';
 
 const App = () => {
   const authState = useStore(state => state.auth);
@@ -57,7 +41,9 @@ const App = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/protected">Protected</Link>
+              <Link to={`/${authState.authenticatedUser.username}`}>
+                My Profile
+              </Link>
             </li>
             <li>
               <Link to="/login">Login</Link>
@@ -69,8 +55,10 @@ const App = () => {
           )}
 
           <Route path="/" exact component={Home} />
+          <Route path="/404" component={NotFound} />
+          {/*  <ProtectedRoute path="/protected" component={ProtectedPage} /> */}
           <AuthenticationRoute path="/login" component={Login} />
-          <ProtectedRoute path="/protected" component={ProtectedPage} />
+          <Route path="/:username" component={Profile} />
         </div>
       )}
     </Router>
