@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore, useAction } from 'easy-peasy';
 import styled from 'styled-components';
@@ -24,9 +24,14 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         {isAuthenticated && (
-          <li>
-            <Link to={`/${authenticatedUser.username}`}>My Profile</Link>
-          </li>
+          <Fragment>
+            <li>
+              <Link to={`/${authenticatedUser.username}`}>My Profile</Link>
+            </li>
+            <li>
+              <Link to="/settings">Settings</Link>
+            </li>
+          </Fragment>
         )}
         {!isAuthenticated && (
           <li>

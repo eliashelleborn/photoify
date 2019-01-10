@@ -12,6 +12,7 @@ import Home from './Home';
 import NotFound from './NotFound';
 import Login from './Login';
 import Profile from './Profile';
+import Settings from './Settings';
 
 // Components
 import Navbar from '../components/Navbar';
@@ -44,8 +45,11 @@ const App = () => {
           {/* ===== ROUTES ===== */}
           <Switch>
             <Route path="/" exact component={Home} />
-            <AuthenticationRoute path="/login" component={Login} />
             <Route path="/404" component={NotFound} />
+
+            <AuthenticationRoute path="/login" component={Login} />
+
+            <ProtectedRoute path="/settings" component={Settings} />
 
             <Route path="/:username" component={Profile} />
           </Switch>
