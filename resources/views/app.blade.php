@@ -14,6 +14,8 @@
     <!-- App Style -->
     <link rel="stylesheet" href="css/app.css">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 
 <body>
