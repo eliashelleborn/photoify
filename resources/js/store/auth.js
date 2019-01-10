@@ -19,15 +19,8 @@ const authStore = {
   setAuthenticatedUser: (state, payload) => {
     state.authenticatedUser = payload;
   },
-  logout: state => {
-    state.isAuthenticated = false;
-    state.accessToken = null;
-    state.authenticatedUser = null;
-    localStorage.removeItem('access_token');
-  },
 
   tokenAuthenticate: effect(async (dispatch, payload, getState) => {
-    console.log('Token Authenticate');
     const {
       auth: { setAuthenticatedUser, setAuthStatus, setLoading }
     } = dispatch;
@@ -44,6 +37,29 @@ const authStore = {
       dispatch.auth.setToken(null);
       setLoading(false);
     }
+  }),
+  logout: effect(async (dispatch, payload, getState) => {
+    const {
+      auth: { setAuthenticatedUser, setAuthStatus, setToken }
+    } = dispatch;
+    const accesstoken = getState().auth.accessToken;
+
+    try {
+      axios
+        .post('/api/auth/logout', null, {
+          headers: { Authorization: `Bearer ${accesstoken}` }
+        })
+        .then(res => {
+          console.log(res.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+
+    setAuthStatus(false);
+    setToken(null);
+    setAuthenticatedUser(null);
+    localStorage.removeItem('access_token');
   })
 };
 

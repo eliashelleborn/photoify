@@ -28,13 +28,13 @@ const Navbar = () => {
             <Link to={`/${authenticatedUser.username}`}>My Profile</Link>
           </li>
         )}
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
+        {!isAuthenticated && (
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        )}
       </ul>
-      {isAuthenticated && (
-        <button onClick={() => authActions.logout()}>Logout</button>
-      )}
+      {isAuthenticated && <button onClick={() => logout()}>Logout</button>}
     </div>
   );
 };
