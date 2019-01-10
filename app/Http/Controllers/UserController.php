@@ -32,8 +32,9 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($username)
     {
+        $user = User::where('username', $username)->firstOrFail();
         return response()->json($user);
     }
 

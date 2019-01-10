@@ -23,7 +23,7 @@ Route::group(['prefix' => 'auth'], function () {
 // USER
 Route::group(['prefix' => 'users'], function () {
     Route::get('/', 'UserController@index');
-    Route::get('{user}', 'UserController@show');
+    Route::get('{username}', 'UserController@show');
     Route::put('{user}', 'UserController@update');
     Route::delete('{user}', 'UserController@destroy');
     Route::post('{user}/update_avatar', 'UserController@updateAvatar');
