@@ -97,12 +97,13 @@ class UserController extends Controller
     {
         $path = Storage::putFile('public/avatars', $request->file('avatar'));
         $authUser = Auth::user();
-        if ($user === $authUser) {
+        if ($user->id === $authUser->id) {
             $user->avatar = Storage::url($path);
             $user->save();
             return response()->json($user);
         }
-        return response()->json(['message' => 'Unauthorized'], 401);
+        return response()->json(['message' => 'Unauthorized', 'debug' => [$user, $authUser],
+        ], 401);
     }
 
     public function removeAvatar(Request $request, User $user)

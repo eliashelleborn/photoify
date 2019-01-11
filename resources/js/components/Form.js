@@ -8,7 +8,6 @@ export const Field = styled(BaseField)`
   padding: 7px 10px;
   border: 1px solid lightgrey;
   border-radius: 3px;
-  margin-bottom: 15px;
 
   &:focus {
     outline: none;
@@ -18,6 +17,7 @@ export const Field = styled(BaseField)`
 const StyledLabel = styled.div`
   display: flex;
   align-items: flex-end;
+  margin-top: 15px;
   margin-bottom: 5px;
 
   & > label {
