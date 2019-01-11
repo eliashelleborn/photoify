@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { StoreProvider, useStore, useAction } from 'easy-peasy';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 import ProtectedRoute from '../utils/ProtectedRoute';
 import AuthenticationRoute from '../utils/AuthenticationRoute';
@@ -14,9 +16,13 @@ import Login from './Login';
 import Register from './Register';
 import Profile from './Profile';
 import Settings from './Settings';
+import EditImage from './EditImage';
 
 // Components
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar/index';
+
+// FontAwesome library setup
+library.add(faCamera);
 
 const App = () => {
   const authState = useStore(state => state.auth);
@@ -36,6 +42,9 @@ const App = () => {
     }
   }, []);
 
+  // Handle redirects (Take photo etc.)
+  if (redirect) return <Redirect to={redirect} />;
+
   // Only render App content if Auth isnt loading
   return (
     <Router>
@@ -50,6 +59,8 @@ const App = () => {
 
             <AuthenticationRoute path="/login" component={Login} />
             <AuthenticationRoute path="/register" component={Register} />
+
+            <ProtectedRoute path="edit-image" component={EditImage} />
 
             <ProtectedRoute path="/settings" component={Settings} />
 
