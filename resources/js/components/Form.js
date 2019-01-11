@@ -31,11 +31,11 @@ const StyledLabel = styled.div`
   }
 `;
 
-export const Label = ({ name }) => {
+export const Label = ({ children, name, withErrorMessage = true }) => {
   return (
     <StyledLabel>
-      <label>{name}</label>
-      <ErrorMessage name={name} component="div" />
+      <label>{children || name}</label>
+      {withErrorMessage && <ErrorMessage name={name} component="div" />}
     </StyledLabel>
   );
 };

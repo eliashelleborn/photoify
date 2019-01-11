@@ -34,9 +34,14 @@ const Navbar = () => {
           </Fragment>
         )}
         {!isAuthenticated && (
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+          <Fragment>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          </Fragment>
         )}
       </ul>
       {isAuthenticated && <button onClick={() => logout()}>Logout</button>}

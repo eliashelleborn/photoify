@@ -11,6 +11,7 @@ import store from '../store';
 import Home from './Home';
 import NotFound from './NotFound';
 import Login from './Login';
+import Register from './Register';
 import Profile from './Profile';
 import Settings from './Settings';
 
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="/404" component={NotFound} />
 
             <AuthenticationRoute path="/login" component={Login} />
+            <AuthenticationRoute path="/register" component={Register} />
 
             <ProtectedRoute path="/settings" component={Settings} />
 
