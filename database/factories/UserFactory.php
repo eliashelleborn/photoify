@@ -19,6 +19,7 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $faker->name,
         'biography' => $faker->text(150),
         'username' => $faker->unique()->userName(),
+        'avatar' => $faker->imageUrl(200, 200),
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => $faker->password,

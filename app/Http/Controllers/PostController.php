@@ -28,7 +28,7 @@ class PostController extends Controller
     {
         $userIds = Auth::user()->following()->pluck('followee_id');
         $userIds[] = Auth::id();
-        $posts = Post::whereIn('user_id', $userIds)->latest()->get();
+        $posts = Post::whereIn('user_id', $userIds)->latest()->with('user')->get();
         return response()->json($posts);
     }
 

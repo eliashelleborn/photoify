@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Post::class, function (Faker $faker) {
     return [
-        'image' => $faker->imageUrl(),
+        'image' => $faker->imageUrl(500, 500),
         'description' => $faker->text(150),
         'user_id' => function () {
             return factory(User::class)->create()->id;
