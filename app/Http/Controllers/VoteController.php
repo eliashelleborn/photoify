@@ -20,7 +20,9 @@ class VoteController extends Controller
             'type' => 'string|required|in:like,dislike',
         ]);
 
-        if (!$post->votes()->where('user_id', Auth::id())->exists()) {
+        $vote = $post->votes()->where('user_id', Auth::id())->first();
+
+        if ($vote === null) {
             $vote = Vote::create([
                 'type' => $request->type,
                 'user_id' => Auth::id(),
@@ -28,6 +30,10 @@ class VoteController extends Controller
                 'voted_type' => get_class($post),
             ]);
 
+            return response()->json($vote);
+        } else if ($vote->type !== $request->type) {
+            $vote->type = $request->type;
+            $vote->save();
             return response()->json($vote);
         }
         return response()->json(['message' => 'You have already voted'], 400);
