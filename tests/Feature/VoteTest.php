@@ -73,6 +73,29 @@ class VoteTest extends TestCase
     /**
      * @test
      */
+    public function user_can_change_vote_type()
+    {
+        $user = $this->createUser();
+        $post = factory(Post::class)->create();
+
+        $postData = ['type' => 'like'];
+
+        $likeResponse = $this->json('POST', 'api/posts/' . $post->id . '/votes', $postData, $this->authHeaders($user))->getOriginalContent();
+
+        $postData = ['type' => 'dislike'];
+        $this->json('POST', 'api/posts/' . $post->id . '/votes', $postData, $this->authHeaders($user))
+            ->assertStatus(200)
+            ->assertJson([
+                "id" => $likeResponse->id,
+                "type" => 'dislike',
+            ]);
+
+        $this->assertCount(1, $post->votes);
+    }
+
+    /**
+     * @test
+     */
     public function guest_can_not_vote()
     {
         $post = factory(Post::class)->create();
@@ -111,7 +134,6 @@ class VoteTest extends TestCase
             'voted_id' => $post->id,
             'voted_type' => get_class($post),
         ]);
-        
 
         $this->json('POST', 'api/posts/' . $vote->voted_id . '/votes?_method=DELETE', [], $this->authHeaders($user))
             ->assertJson(['message' => 'Successfully removed vote']);
@@ -126,7 +148,6 @@ class VoteTest extends TestCase
     {
         $user = $this->createUser();
         $post = factory(Post::class)->create();
-        
 
         $this->json('POST', 'api/posts/' . $post->id . '/votes?_method=DELETE', [], $this->authHeaders($user))
             ->assertStatus(400)
