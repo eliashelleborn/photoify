@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { StoreProvider, useStore, useAction } from 'easy-peasy';
@@ -16,7 +16,7 @@ import Login from './Login';
 import Register from './Register';
 import Profile from './Profile';
 import Settings from './Settings';
-import EditImage from './EditImage';
+import CreatePost from './CreatePost';
 
 // Components
 import Navbar from '../components/Navbar/index';
@@ -42,14 +42,11 @@ const App = () => {
     }
   }, []);
 
-  // Handle redirects (Take photo etc.)
-  if (redirect) return <Redirect to={redirect} />;
-
   // Only render App content if Auth isnt loading
   return (
     <Router>
       {!authState.isLoading && (
-        <div>
+        <Fragment>
           <Navbar />
 
           {/* ===== ROUTES ===== */}
@@ -60,13 +57,13 @@ const App = () => {
             <AuthenticationRoute path="/login" component={Login} />
             <AuthenticationRoute path="/register" component={Register} />
 
-            <ProtectedRoute path="edit-image" component={EditImage} />
+            <ProtectedRoute path="/create-post" component={CreatePost} />
 
             <ProtectedRoute path="/settings" component={Settings} />
 
             <Route path="/:username" component={Profile} />
           </Switch>
-        </div>
+        </Fragment>
       )}
     </Router>
   );

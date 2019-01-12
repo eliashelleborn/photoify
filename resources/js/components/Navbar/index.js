@@ -1,7 +1,11 @@
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { useStore, useAction } from 'easy-peasy';
 import styled from 'styled-components';
+import { withRouter } from 'react-router';
+
+// Components
+import TakePhoto from './TakePhoto';
 
 const StyledNavbar = styled.nav`
   ul {
@@ -10,15 +14,26 @@ const StyledNavbar = styled.nav`
     margin: 0;
     li {
       display: inline-block;
+      padding: 5px;
     }
   }
 `;
 
-const Navbar = () => {
+const Navbar = props => {
+  /*   const [redirect, setRedirect] = useState(null); */
   const { authenticatedUser, isAuthenticated } = useStore(state => state.auth);
   const logout = useAction(dispatch => dispatch.auth.logout);
+
+  // Handle redirects (Take photo etc.)
+  /*   if (redirect) {
+    const to = redirect;
+    setRedirect(null);
+    console.log(to);
+    return <Redirect to={to} />;
+  } */
+
   return (
-    <div>
+    <StyledNavbar>
       <ul>
         <li>
           <Link to="/">Home</Link>
@@ -44,9 +59,21 @@ const Navbar = () => {
           </Fragment>
         )}
       </ul>
-      {isAuthenticated && <button onClick={() => logout()}>Logout</button>}
-    </div>
+      {isAuthenticated && (
+        <Fragment>
+          <button onClick={() => logout()}>Logout</button>
+          <TakePhoto
+            onUpload={e =>
+              props.history.push({
+                pathname: '/create-post',
+                state: { image: URL.createObjectURL(e.target.files[0]) }
+              })
+            }
+          />
+        </Fragment>
+      )}
+    </StyledNavbar>
   );
 };
 
-export default Navbar;
+export default withRouter(Navbar);
