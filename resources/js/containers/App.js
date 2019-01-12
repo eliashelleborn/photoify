@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { StoreProvider, useStore, useAction } from 'easy-peasy';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faBars } from '@fortawesome/free-solid-svg-icons';
 
 import ProtectedRoute from '../utils/ProtectedRoute';
 import AuthenticationRoute from '../utils/AuthenticationRoute';
@@ -22,7 +22,7 @@ import CreatePost from './CreatePost';
 import Navbar from '../components/Navbar/index';
 
 // FontAwesome library setup
-library.add(faCamera);
+library.add(faCamera, faBars);
 
 const App = () => {
   const authState = useStore(state => state.auth);

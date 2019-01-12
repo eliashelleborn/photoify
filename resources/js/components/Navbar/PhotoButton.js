@@ -2,20 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const StyledTakePhoto = styled.label`
+const StyledPhotoButton = styled.label`
   cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
   input {
     display: none;
   }
 `;
 
-const TakePhoto = ({ onUpload }) => {
+const PhotoButton = ({ onUpload }) => {
   return (
-    <StyledTakePhoto>
+    <StyledPhotoButton>
       <FontAwesomeIcon icon="camera" />
       <input type="file" accept="image/*" onChange={e => onUpload(e)} />
-    </StyledTakePhoto>
+    </StyledPhotoButton>
   );
 };
 
-export default TakePhoto;
+export default PhotoButton;
