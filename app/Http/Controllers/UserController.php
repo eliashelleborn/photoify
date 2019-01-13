@@ -17,16 +17,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return User::all();
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\User  $user
@@ -34,7 +24,10 @@ class UserController extends Controller
      */
     public function show($username)
     {
-        $user = User::where('username', $username)->firstOrFail();
+        $user = User::where('username', $username)
+            ->withCount(['following', 'followers', 'votes'])
+            ->firstOrFail();
+
         return response()->json($user);
     }
 

@@ -30,6 +30,17 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'following_count' => 'int',
+        'followers_count' => 'int',
+        'votes_count' => 'int',
+    ];
+
+    /**
      * Relations
      */
     public function posts()

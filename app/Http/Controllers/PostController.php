@@ -31,10 +31,10 @@ class PostController extends Controller
             ->latest()
             ->with(['myVote'])
             ->withCount([
-                'votes as likes' => function ($query) {
+                'votes as likes_count' => function ($query) {
                     $query->where('type', 'like');
                 },
-                'votes as dislikes' => function ($query) {
+                'votes as dislikes_count' => function ($query) {
                     $query->where('type', 'dislike');
                 }])
             ->get();
