@@ -49,7 +49,7 @@ class User extends Authenticatable implements JWTSubject
             'follows',
             'followee_id',
             'follower_id'
-        );
+        )->withTimestamps();
     }
     public function following()
     {
@@ -58,7 +58,7 @@ class User extends Authenticatable implements JWTSubject
             'follows',
             'follower_id',
             'followee_id'
-        );
+        )->withTimestamps();
     }
 
     /**

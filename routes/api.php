@@ -26,13 +26,15 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('{username}', 'UserController@show');
     Route::put('{user}', 'UserController@update');
     Route::delete('{user}', 'UserController@destroy');
+    Route::get('{user}/posts', 'PostController@postsByUser');
     Route::post('{user}/update_avatar', 'UserController@updateAvatar');
     Route::post('{user}/remove_avatar', 'UserController@removeAvatar');
 
     // User - Votes
     Route::get('{user}/votes', 'UserController@votes');
 
-    // User - Follows
+    // User - Follow
+    Route::post('{user}/follow', 'FollowController@create');
     Route::get('{user}/followers', 'FollowController@followers');
     Route::get('{user}/following', 'FollowController@following');
 });
