@@ -6,8 +6,9 @@ import { withRouter } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
+import SideNav from './SideNav';
+import IconButton from './IconButton';
 import PhotoButton from './PhotoButton';
-import BurgerButton from './BurgerButton';
 import UserButton from './UserButton';
 
 const StyledNavbar = styled.nav`
@@ -40,6 +41,7 @@ const Right = styled.div`
 const Navbar = props => {
   const { authenticatedUser, isAuthenticated } = useStore(state => state.auth);
   const logout = useAction(dispatch => dispatch.auth.logout);
+  const [sideNavOpen, setSideNavOpen] = useState(false);
 
   return (
     <StyledNavbar>
@@ -60,11 +62,15 @@ const Navbar = props => {
       <Right>
         {isAuthenticated && (
           <Fragment>
-            <UserButton avatar={authenticatedUser.avatar} />
-            <BurgerButton />
+            {/* <UserButton avatar={authenticatedUser.avatar} /> */}
+            <IconButton icon="search" />
           </Fragment>
         )}
+        {!isAuthenticated && <Link to="/login">Login</Link>}
+
+        <IconButton icon="bars" onClick={() => setSideNavOpen(!sideNavOpen)} />
       </Right>
+      <SideNav isOpen={sideNavOpen} close={() => setSideNavOpen(false)} />
     </StyledNavbar>
   );
 };

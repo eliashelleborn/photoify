@@ -2,23 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const StyledBurgerButton = styled.button`
+const StyledIconButton = styled.button`
   border: none;
   background: none;
   padding: 10px;
   display: flex;
   align-items: center;
+  cursor: pointer;
   &:focus {
     outline: 0;
   }
 `;
 
-const BurgerButton = () => {
+const IconButton = props => {
   return (
-    <StyledBurgerButton>
-      <FontAwesomeIcon icon="bars" />
-    </StyledBurgerButton>
+    <StyledIconButton onClick={props.onClick}>
+      <FontAwesomeIcon icon={props.icon} />
+    </StyledIconButton>
   );
 };
 
-export default BurgerButton;
+export default IconButton;
