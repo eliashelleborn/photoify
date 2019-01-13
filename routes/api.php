@@ -30,6 +30,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('{user}/posts', 'PostController@postsByUser');
     Route::post('{user}/update_avatar', 'UserController@updateAvatar');
     Route::post('{user}/remove_avatar', 'UserController@removeAvatar');
+    Route::post('{user}/change_password', 'UserController@changePassword');
 
     // User - Votes
     Route::get('{user}/votes', 'VoteController@votesByUser');

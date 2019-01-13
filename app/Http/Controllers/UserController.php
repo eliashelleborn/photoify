@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
@@ -69,6 +70,25 @@ class UserController extends Controller
             $user->save();
 
             return response()->json($user);
+        }
+
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+
+    public function changePassword(Request $request, User $user)
+    {
+        if ($user->id === Auth::id()) {
+            $request->validate([
+                'current_password' => 'required|',
+                'new_password' => 'required|confirmed',
+            ]);
+
+            if (Hash::check($request->current_password, $user->password)) {
+                $user->password = $request->new_password;
+                $user->save();
+                return response()->json(['message' => 'Successfully changed password']);
+            }
+            return response()->json(['message' => 'Incorrect password'], 400);
         }
 
         return response()->json(['message' => 'Unauthorized'], 401);
