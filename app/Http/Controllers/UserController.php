@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'show', 'votes']]);
+        $this->middleware('auth:api', ['except' => ['index', 'show', 'votes', 'search']]);
     }
 
     /**
@@ -29,6 +29,17 @@ class UserController extends Controller
             ->firstOrFail();
 
         return response()->json($user);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+
+        $result = User::where('username', 'LIKE', '%' . $query . '%')
+            ->orWhere('name', 'LIKE', '%' . $query . '%')
+            ->get();
+
+        return response()->json($result);
     }
 
     /**
