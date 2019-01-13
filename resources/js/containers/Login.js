@@ -45,6 +45,7 @@ const Login = props => {
             const res = await axios.post('/api/auth/login', values);
             localStorage.setItem('access_token', res.data.access_token);
             authActions.setToken(res.data.access_token);
+            authActions.setLoading(true);
             authActions.tokenAuthenticate();
             setRedirect(true);
           } catch ({ response: res }) {

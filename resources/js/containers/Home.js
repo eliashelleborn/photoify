@@ -25,10 +25,7 @@ const Home = () => {
   const [feed, setFeed] = useState(null);
   useEffect(() => {
     if (authState.isAuthenticated) {
-      axios
-        .get(`/api/feed`, {
-          headers: { Authorization: `Bearer ${authState.accessToken}` }
-        })
+      getFeed(authState.accessToken)
         .then(res => {
           setFeed(res.data);
           setLoading(false);
@@ -37,11 +34,12 @@ const Home = () => {
           setError(error.response);
           setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
   }, []);
 
-  if (loading) console.log(loading);
-
+  if (loading) return null;
   return (
     <Fragment>
       {authState.isAuthenticated && (
