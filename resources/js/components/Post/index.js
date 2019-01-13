@@ -32,7 +32,11 @@ const Post = post => {
       <Header user={post.user} createdAt={post.created_at} />
       <ImageWrapper>
         <img src={post.image} alt="" onClick={() => setOverlayOpen(true)} />
-        <Overlay isOpen={overlayOpen} close={() => setOverlayOpen(false)} />
+        <Overlay
+          isOpen={overlayOpen}
+          post={post}
+          close={() => setOverlayOpen(false)}
+        />
       </ImageWrapper>
     </StyledPost>
   );

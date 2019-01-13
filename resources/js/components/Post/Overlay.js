@@ -33,12 +33,12 @@ const ClickMask = styled.div`
   z-index: 40;
 `;
 
-const Overlay = ({ isOpen, close }) => {
+const Overlay = ({ isOpen, close, post }) => {
   return (
     <StyledOverlay isOpen={isOpen}>
       <ClickMask onClick={close} />
       <Content>
-        <Vote stats={null} />
+        <Vote post={post} />
       </Content>
     </StyledOverlay>
   );
