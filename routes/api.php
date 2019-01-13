@@ -46,6 +46,7 @@ Route::get('/feed', 'PostController@feed');
 
 // POST
 Route::group(['prefix' => 'posts'], function () {
+    Route::get('search', 'PostController@search');
     Route::get('/', 'PostController@index');
     Route::post('/', 'PostController@store');
     Route::get('{post}', 'PostController@show');

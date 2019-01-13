@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'show', 'postsByUser']]);
+        $this->middleware('auth:api', ['except' => ['index', 'show', 'postsByUser', 'search']]);
     }
 
     /**
@@ -23,6 +23,15 @@ class PostController extends Controller
     public function index()
     {
         return Post::with('user')->get();
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+
+        $result = Post::where('description', 'LIKE', '%' . $query . '%')->get();
+
+        return response()->json($result);
     }
 
     public function postsByUser(User $user)
