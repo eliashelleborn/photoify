@@ -35,6 +35,7 @@ Route::group(['prefix' => 'users'], function () {
 
     // User - Follow
     Route::post('{user}/follow', 'FollowController@create');
+    Route::delete('{user}/follow', 'FollowController@destroy');
     Route::get('{user}/followers', 'FollowController@followers');
     Route::get('{user}/following', 'FollowController@following');
 });

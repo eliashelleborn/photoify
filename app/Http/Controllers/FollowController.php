@@ -33,6 +33,10 @@ class FollowController extends Controller
 
     public function destroy(User $user)
     {
-
+        if (Auth::user()->following->contains($user->id)) {
+            Auth::user()->following()->detach($user->id);
+            return response()->json(['message' => 'Successfully unfollowed user']);
+        }
+        return response()->json(['message' => 'You are not following this user'], 400);
     }
 }
