@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +12,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'show']]);
+        $this->middleware('auth:api', ['except' => ['index', 'show', 'postsByUser']]);
     }
 
     /**
@@ -24,15 +25,30 @@ class PostController extends Controller
         return Post::with('user')->get();
     }
 
+    public function postsByUser(User $user)
+    {
+        $posts = $user->posts()
+            ->latest()
+            ->with(['myVote'])
+            ->withCount([
+                'votes as likes' => function ($query) {
+                    $query->where('type', 'like');
+                },
+                'votes as dislikes' => function ($query) {
+                    $query->where('type', 'dislike');
+                }])
+            ->get();
+
+        return response()->json($posts);
+    }
+
     public function feed()
     {
         $userIds = Auth::user()->following()->pluck('followee_id');
         $userIds[] = Auth::id();
         $posts = Post::whereIn('user_id', $userIds)
             ->latest()
-            ->with(['user', 'votes' => function ($query) {
-                $query->where('user_id', Auth::id());
-            }])
+            ->with(['user', 'myVote'])
             ->withCount([
                 'votes as likes' => function ($query) {
                     $query->where('type', 'like');

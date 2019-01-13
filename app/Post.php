@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -36,5 +37,13 @@ class Post extends Model
     public function votes()
     {
         return $this->morphMany(Vote::class, 'voted');
+    }
+
+    public function myVote()
+    {
+        if (Auth::check()) {
+            return $this->hasOne(Vote::class, 'voted_id')->where('user_id', Auth::id());
+        }
+
     }
 }

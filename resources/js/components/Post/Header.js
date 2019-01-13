@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import TimeAgo from 'react-timeago';
 
@@ -10,7 +10,7 @@ const StyledHeader = styled.div`
   align-items: center;
   padding: 10px;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
-
+  min-height: 60px;
   img {
     border-radius: 50%;
   }
@@ -25,11 +25,16 @@ const StyledHeader = styled.div`
   }
 `;
 
-const PostHeader = ({ user, createdAt }) => {
+const PostHeader = ({ user, createdAt, showUser }) => {
   return (
     <StyledHeader>
-      <Img src={user.avatar} alt="" width="40px" height="40px" />
-      <p>{user.username}</p>
+      {showUser && (
+        <Fragment>
+          <Img src={user.avatar} alt="" width="40px" height="40px" />
+          <p>{user.username}</p>
+        </Fragment>
+      )}
+
       <TimeAgo date={new Date(createdAt + ' UTC').toString()} />
     </StyledHeader>
   );

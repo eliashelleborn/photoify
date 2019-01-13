@@ -46,7 +46,7 @@ const Home = () => {
     <Fragment>
       {authState.isAuthenticated && (
         <Feed>
-          {feed && feed.map(post => <Post key={post.id} {...post} />)}
+          {feed && feed.map(post => <Post key={post.id} post={{ ...post }} />)}
         </Feed>
       )}
     </Fragment>

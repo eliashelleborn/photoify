@@ -25,11 +25,15 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const Post = post => {
+const Post = ({ post, showUser = true }) => {
   const [overlayOpen, setOverlayOpen] = useState(false);
   return (
     <StyledPost>
-      <Header user={post.user} createdAt={post.created_at} />
+      <Header
+        showUser={showUser}
+        user={post.user}
+        createdAt={post.created_at}
+      />
       <ImageWrapper>
         <img src={post.image} alt="" onClick={() => setOverlayOpen(true)} />
         <Overlay

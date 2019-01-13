@@ -35,10 +35,9 @@ const removeVote = (postId, accessToken) => {
 
 const Vote = ({ post }) => {
   const accessToken = useStore(state => state.auth.accessToken);
-  const [myVote, setMyVote] = useState(post.votes[0]);
+  const [myVote, setMyVote] = useState(post.my_vote);
   const [likes, setLikes] = useState(parseInt(post.likes));
   const [dislikes, setDislikes] = useState(parseInt(post.dislikes));
-
   return (
     <StyledVote>
       <p>My Vote: {myVote && myVote.type}</p>
