@@ -31,7 +31,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('{user}/remove_avatar', 'UserController@removeAvatar');
 
     // User - Votes
-    Route::get('{user}/votes', 'UserController@votes');
+    Route::get('{user}/votes', 'VoteController@votesByUser');
 
     // User - Follow
     Route::post('{user}/follow', 'FollowController@create');
@@ -52,6 +52,7 @@ Route::group(['prefix' => 'posts'], function () {
     Route::delete('{post}', 'PostController@destroy');
 
     // Post - Votes
+    Route::get('{post}/votes', 'VoteController@votesByPost');
     Route::post('{post}/votes', 'VoteController@store');
     Route::delete('{post}/votes', 'VoteController@destroy');
 });

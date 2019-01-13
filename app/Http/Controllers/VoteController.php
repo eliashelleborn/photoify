@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
 use App\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,16 @@ class VoteController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => []]);
+    }
+
+    public function votesByPost(Post $post)
+    {
+        return response()->json($post->votes()->latest()->get());
+    }
+
+    public function votesByUser(User $user)
+    {
+        return response()->json($user->votes()->latest()->get());
     }
 
     public function store(Request $request, Post $post)
