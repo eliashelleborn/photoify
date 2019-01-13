@@ -41,6 +41,16 @@ class Post extends Model
         return $this->morphMany(Vote::class, 'voted');
     }
 
+    public function likes()
+    {
+        return $this->morphMany(Vote::class, 'voted')->where('type', 'like');
+    }
+
+    public function dislikes()
+    {
+        return $this->morphMany(Vote::class, 'voted')->where('type', 'dislike');
+    }
+
     public function myVote()
     {
         if (Auth::check()) {

@@ -25,7 +25,7 @@ class UserController extends Controller
     public function show($username)
     {
         $user = User::where('username', $username)
-            ->withCount(['following', 'followers', 'votes'])
+            ->withCount(['following', 'followers', 'votes', 'likes', 'dislikes'])
             ->firstOrFail();
 
         return response()->json($user);

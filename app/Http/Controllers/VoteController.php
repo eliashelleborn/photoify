@@ -47,4 +47,5 @@ class VoteController extends Controller
         }
         return response()->json(['message' => 'You havent voted yet'], 400);
     }
+
 }

@@ -30,13 +30,7 @@ class PostController extends Controller
         $posts = $user->posts()
             ->latest()
             ->with(['myVote'])
-            ->withCount([
-                'votes as likes_count' => function ($query) {
-                    $query->where('type', 'like');
-                },
-                'votes as dislikes_count' => function ($query) {
-                    $query->where('type', 'dislike');
-                }])
+            ->withCount(['likes', 'dislikes'])
             ->get();
 
         return response()->json($posts);

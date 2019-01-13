@@ -38,6 +38,8 @@ class User extends Authenticatable implements JWTSubject
         'following_count' => 'int',
         'followers_count' => 'int',
         'votes_count' => 'int',
+        'dislikes_count' => 'int',
+        'likes_count' => 'int',
     ];
 
     /**
@@ -51,6 +53,16 @@ class User extends Authenticatable implements JWTSubject
     public function votes()
     {
         return $this->hasMany(Vote::class, 'user_id');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Vote::class, 'user_id')->where('type', 'like');
+    }
+
+    public function dislikes()
+    {
+        return $this->hasMany(Vote::class, 'user_id')->where('type', 'dislike');
     }
 
     public function followers()
