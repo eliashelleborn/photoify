@@ -26,8 +26,12 @@ class FollowController extends Controller
 
     public function create(User $user)
     {
+        if (Auth::id() === $user->id) {
+            return response()->json(['message' => 'You cannot follow yourself'], 400);
+        }
+
         if (!Auth::user()->following->contains($user->id)) {
-            /* Auth::user()->following()->attach($user->id); */
+
             $follow = Follow::create([
                 'follower_id' => Auth::id(),
                 'followee_id' => $user->id,
@@ -35,6 +39,7 @@ class FollowController extends Controller
             $user->notify(new UserFollowed(Auth::user()));
             return response()->json($follow);
         }
+
         return response()->json(['message' => 'You are already following this user'], 400);
     }
 

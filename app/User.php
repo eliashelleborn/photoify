@@ -87,10 +87,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function myFollow()
     {
-        if (Auth::check()) {
-            return $this->hasOne(Follow::class, 'followee_id')->where('follower_id', Auth::id());
-        }
-
+        return $this->hasOne(Follow::class, 'followee_id')->where('follower_id', Auth::id());
     }
 
     /**
