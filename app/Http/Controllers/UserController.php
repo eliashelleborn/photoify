@@ -26,6 +26,7 @@ class UserController extends Controller
     public function show($username)
     {
         $user = User::where('username', $username)
+            ->with(['myFollow'])
             ->withCount(['following', 'followers', 'votes', 'likes', 'dislikes'])
             ->firstOrFail();
 
@@ -146,7 +147,7 @@ class UserController extends Controller
 
     public function notifications(User $user)
     {
-        if (Auth::user()) {
+        if ($user->id === Auth::id()) {
             return response()->json(Auth::user()->notifications);
         }
         return response()->json(['message' => 'Unauthorized'], 401);

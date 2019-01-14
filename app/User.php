@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -82,6 +83,14 @@ class User extends Authenticatable implements JWTSubject
             'follower_id',
             'followee_id'
         )->withTimestamps();
+    }
+
+    public function myFollow()
+    {
+        if (Auth::check()) {
+            return $this->hasOne(Follow::class, 'followee_id')->where('follower_id', Auth::id());
+        }
+
     }
 
     /**

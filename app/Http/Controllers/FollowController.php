@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Follow;
 use App\Notifications\UserFollowed;
 use App\User;
 use Illuminate\Http\Request;
@@ -26,9 +27,13 @@ class FollowController extends Controller
     public function create(User $user)
     {
         if (!Auth::user()->following->contains($user->id)) {
-            Auth::user()->following()->attach($user->id);
+            /* Auth::user()->following()->attach($user->id); */
+            $follow = Follow::create([
+                'follower_id' => Auth::id(),
+                'followee_id' => $user->id,
+            ]);
             $user->notify(new UserFollowed(Auth::user()));
-            return response()->json(['message' => 'Successfully followed user']);
+            return response()->json($follow);
         }
         return response()->json(['message' => 'You are already following this user'], 400);
     }

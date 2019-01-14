@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
+import { useStore } from 'easy-peasy';
 
 import Post from '../components/Post/';
-import { useStore } from 'easy-peasy';
+import FollowButton from '../components/FollowButton';
 
 const Feed = styled.div`
   display: flex;
@@ -19,7 +20,9 @@ const Profile = ({ match }) => {
   const [posts, setPosts] = useState(null);
   useEffect(() => {
     axios
-      .get(`/api/users/${match.params.username}`)
+      .get(`/api/users/${match.params.username}`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      })
       .then(res => {
         setUser(res.data);
         axios
@@ -46,6 +49,7 @@ const Profile = ({ match }) => {
   return (
     <div>
       <h1>Profile - {user.username}</h1>
+      <FollowButton user={user} />
       <Feed>
         {posts.map(post => (
           <Post showUser={false} key={post.id} post={{ ...post }} />
