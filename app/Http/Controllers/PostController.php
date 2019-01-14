@@ -29,6 +29,10 @@ class PostController extends Controller
     {
         $query = $request->get('query');
 
+        if (!$query || $query === '') {
+            return response()->json(['message' => 'You havent provided a search query'], 400);
+        }
+
         $result = Post::where('description', 'LIKE', '%' . $query . '%')->get();
 
         return response()->json($result);

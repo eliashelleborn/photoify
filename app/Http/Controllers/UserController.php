@@ -37,6 +37,10 @@ class UserController extends Controller
     {
         $query = $request->get('query');
 
+        if (!$query || $query === '') {
+            return response()->json(['message' => 'You havent provided a search query'], 400);
+        }
+
         $result = User::where('username', 'LIKE', '%' . $query . '%')
             ->orWhere('name', 'LIKE', '%' . $query . '%')
             ->get();
