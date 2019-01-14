@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 
 class UserFollowed extends Notification
@@ -30,7 +31,7 @@ class UserFollowed extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -45,5 +46,13 @@ class UserFollowed extends Notification
             'follower_id' => $this->follower->id,
             'follower_username' => $this->follower->username,
         ];
+    }
+
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'follower_id' => $this->follower->id,
+            'follower_username' => $this->follower->username,
+        ]);
     }
 }

@@ -32,6 +32,9 @@ library.add(faCamera, faBars, faBell, faSearch);
 const App = () => {
   const authState = useStore(state => state.auth);
   const authActions = useAction(dispatch => dispatch.auth);
+  const { notificationsEventListener, getNotifications } = useAction(
+    dispatch => dispatch.notifications
+  );
 
   // On app load
   useEffect(() => {
@@ -40,7 +43,12 @@ const App = () => {
     // Try getting authenticated user if access_token exists in localStorage
     if (!authState.isAuthenticated && access_token) {
       authActions.setToken(access_token);
-      authActions.tokenAuthenticate();
+      authActions.tokenAuthenticate().then(() => {
+        // Get all notifications and initiate event listener
+        getNotifications().then(() => {
+          notificationsEventListener();
+        });
+      });
     } else {
       // If no token was found, just set loading status to false
       authActions.setLoading(false);
