@@ -2,42 +2,44 @@
 
 namespace Tests\Feature;
 
-use App\Post;
+use App\User;
 use App\Vote;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 /**
- * @testdox Posts\Get
- * @group posts
- * @group posts-get
+ * @testdox User\Get
+ * @group users
+ * @group users-get
  */
-class PostsGetTest extends TestCase
+class UserGetTest extends TestCase
 {
     use DatabaseMigrations;
 
     /**
      * @test
      */
-    public function can_get_post_by_id()
+    public function can_get_user_by_username()
     {
-        $post = factory(Post::class)->create();
+        $user = factory(User::class)->create();
 
-        $this->json('GET', 'api/posts/' . $post->id)
+        $this->json('GET', 'api/users/' . $user->username)
             ->assertStatus(200)
-            ->assertJsonStructure([
-                'id', 'image', 'description', 'user_id', 'created_at', 'updated_at',
+            ->assertJson([
+
+                'id' => $user->id,
+
             ]);
     }
 
     /**
      * @test
      */
-    public function can_get_post_votes()
+    public function can_get_users_votes()
     {
         $vote = factory(Vote::class)->create();
 
-        $this->json('GET', 'api/posts/' . $vote->voted_id . '/votes')
+        $this->json('GET', 'api/users/' . $vote->user_id . '/votes')
             ->assertStatus(200)
             ->assertJsonCount(1);
     }
@@ -45,7 +47,7 @@ class PostsGetTest extends TestCase
     /**
      * @test
      */
-    public function post_not_found()
+    public function user_not_found()
     {
         $this->json('GET', 'api/posts/' . 999)
             ->assertStatus(404);

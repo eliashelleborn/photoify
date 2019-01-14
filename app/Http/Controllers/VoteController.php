@@ -12,7 +12,7 @@ class VoteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => []]);
+        $this->middleware('auth:api', ['except' => ['votesByPost', 'votesByUser']]);
     }
 
     public function votesByPost(Post $post)
