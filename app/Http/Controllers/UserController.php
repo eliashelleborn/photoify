@@ -143,4 +143,12 @@ class UserController extends Controller
 
         return response()->json(['message' => 'User not found'], 404);
     }
+
+    public function notifications(User $user)
+    {
+        if (Auth::user()) {
+            return response()->json(Auth::user()->notifications);
+        }
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
 }

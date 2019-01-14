@@ -40,6 +40,9 @@ Route::group(['prefix' => 'users'], function () {
     Route::delete('{user}/follow', 'FollowController@destroy');
     Route::get('{user}/followers', 'FollowController@followers');
     Route::get('{user}/following', 'FollowController@following');
+
+    // Notifications
+    Route::get('{user}/notifications', 'UserController@notifications');
 });
 
 // Feed
