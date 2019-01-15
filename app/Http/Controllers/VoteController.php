@@ -42,8 +42,8 @@ class VoteController extends Controller
             ]);
 
             return response()->json($vote);
-        } else if ($vote->type !== $request->type) {
-            $vote->type = $request->type;
+        } else if ($vote['type'] !== $request->type) {
+            $vote['type'] = $request->type;
             $vote->save();
             return response()->json($vote);
         }
