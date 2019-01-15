@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -66,7 +67,7 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        $user = auth()->user();
+        $user = User::where('id', Auth::id())->withCount(['following', 'followers', 'votes', 'likes', 'dislikes'])->first();
         return response()->json($user);
     }
 
