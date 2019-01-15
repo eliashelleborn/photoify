@@ -2,13 +2,6 @@ import React, { useEffect, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { StoreProvider, useStore, useAction } from 'easy-peasy';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faCamera,
-  faBars,
-  faBell,
-  faSearch
-} from '@fortawesome/free-solid-svg-icons';
 
 import ProtectedRoute from '../utils/ProtectedRoute';
 import AuthenticationRoute from '../utils/AuthenticationRoute';
@@ -24,10 +17,8 @@ import Settings from './Settings';
 import CreatePost from './CreatePost';
 
 // Components
-import Navbar from '../components/Navbar/index';
-
-// FontAwesome library setup
-library.add(faCamera, faBars, faBell, faSearch);
+import MobileNavigation from '../components/Navigation/Mobile/';
+/* import Navbar from '../components/Navbar/index'; */
 
 const App = () => {
   const authState = useStore(state => state.auth);
@@ -60,7 +51,8 @@ const App = () => {
     <Router>
       {!authState.isLoading && (
         <Fragment>
-          <Navbar />
+          {/* <Navbar /> */}
+          <MobileNavigation />
 
           {/* ===== ROUTES ===== */}
           <Switch>

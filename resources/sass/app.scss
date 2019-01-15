@@ -1,11 +1,9 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// CSS Reset/Normalize
+// Vendor
 @import 'vendor/normalize';
-
-// Variables
-@import 'variables';
+@import 'vendor/hamburgers/hamburgers.scss';
 
 *,
 *:before,
@@ -15,5 +13,4 @@
 
 body {
   font-family: 'Nunito', sans-serif;
-  padding-top: 56px;
 }
