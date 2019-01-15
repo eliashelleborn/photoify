@@ -27,7 +27,6 @@ const StyledMenuButton = styled.div`
 `;
 
 const MenuButton = ({ onClick, menuIsOpen }) => {
-  console.log(menuIsOpen);
   return (
     <StyledMenuButton onClick={onClick}>
       <button

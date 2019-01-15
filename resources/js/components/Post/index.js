@@ -11,6 +11,7 @@ const StyledPost = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 200px;
+  z-index: -1;
 `;
 
 const ImageWrapper = styled.div`

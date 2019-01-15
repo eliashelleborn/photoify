@@ -18,7 +18,7 @@ const MobileNavigation = props => {
         onClick={() => setMenuIsOpen(!menuIsOpen)}
       />
       <CircleButtons menuIsOpen={menuIsOpen} />
-      <Menu menuIsOpen={menuIsOpen} />
+      <Menu closeMenu={() => setMenuIsOpen(false)} menuIsOpen={menuIsOpen} />
     </StyledMobileNavigation>
   );
 };
