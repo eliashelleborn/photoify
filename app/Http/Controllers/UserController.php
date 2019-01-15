@@ -124,9 +124,9 @@ class UserController extends Controller
 
     public function updateAvatar(Request $request, User $user)
     {
-        $path = Storage::putFile('public/avatars', $request->file('avatar'));
         $authUser = Auth::user();
         if ($user->id === $authUser->id) {
+            $path = Storage::putFile('public/avatars', $request->file('avatar'));
             $user->avatar = Storage::url($path);
             $user->save();
             return response()->json($user);
