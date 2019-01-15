@@ -77,7 +77,7 @@ class UserUpdateTest extends TestCase
                 'avatar' => null,
             ]);
 
-        // Storage::disk('public')->assert('avatars/' . $file->hashName());
+        Storage::disk('public')->assertMissing('avatars/' . $file->hashName());
     }
 
     /**
