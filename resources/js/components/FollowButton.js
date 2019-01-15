@@ -5,7 +5,19 @@ import { useStore } from 'easy-peasy';
 
 import { Button } from './Button';
 
-const StyledFollowButton = styled(Button)``;
+const StyledFollowButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 15px;
+  color: inherit;
+  margin-top: 10px;
+
+  &:focus {
+    outline: none;
+  }
+`;
 
 const FollowButton = ({ user }) => {
   const { accessToken } = useStore(state => state.auth);

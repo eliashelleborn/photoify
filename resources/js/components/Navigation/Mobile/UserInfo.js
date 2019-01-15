@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Img from '../../Img';
+import UserStats from '../../UserStats';
 
 const StyledUserInfo = styled.div`
   display: flex;
@@ -32,30 +33,6 @@ const Avatar = styled.div`
   }
 `;
 
-const Stats = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 300px;
-
-  & > div {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin: 0 15px;
-    span {
-      font-size: 12px;
-      color: #858585;
-    }
-    strong {
-      font-size: 36px;
-      font-weight: bold;
-    }
-  }
-`;
-
 const UserInfo = ({ user }) => {
   return (
     <StyledUserInfo>
@@ -63,20 +40,11 @@ const UserInfo = ({ user }) => {
         <img src={user.avatar} alt="" />
       </Avatar>
       <h3>{user.username}</h3>
-      <Stats>
-        <div>
-          <span>FOLLOWERS</span>
-          <strong>{user.followers_count}</strong>
-        </div>
-        <div>
-          <span>FOLLOWING</span>
-          <strong>{user.following_count}</strong>
-        </div>
-        <div>
-          <span>VOTES</span>
-          <strong>{user.votes_count}</strong>
-        </div>
-      </Stats>
+      <UserStats
+        following={user.following_count}
+        followers={user.followers_count}
+        votes={user.votes_count}
+      />
     </StyledUserInfo>
   );
 };

@@ -6,14 +6,52 @@ import { useStore } from 'easy-peasy';
 
 import Post from '../components/Post/';
 import FollowButton from '../components/FollowButton';
+import UserStats from '../components/UserStats';
+
+const StyledProfile = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const UserInfo = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 15px;
+  margin-bottom: 15px;
+
+  div:first-child {
+    width: 100px;
+    height: 100px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  div:last-child {
+    flex: 1;
+    padding-left: 10px;
+    h3 {
+      margin: 0;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    p {
+      font-size: 13px;
+      margin: 0;
+    }
+  }
+`;
 
 const Feed = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin-top: 15px;
 `;
 
 const Profile = ({ match }) => {
-  const { accessToken } = useStore(state => state.auth);
+  const { accessToken, authenticatedUser } = useStore(state => state.auth);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
@@ -47,15 +85,38 @@ const Profile = ({ match }) => {
   if (loading) return null;
   if (error && error.status === 404) return <Redirect to="/404" />;
   return (
-    <div>
-      <h1>Profile - {user.username}</h1>
-      <FollowButton user={user} />
+    <StyledProfile>
+      <UserInfo>
+        <div>
+          <img
+            src={
+              user.avatar ||
+              'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+            }
+            alt="User avatar"
+          />
+        </div>
+        <div>
+          <h3>{user.username}</h3>
+          <p>{user.biography}</p>
+        </div>
+      </UserInfo>
+      <UserStats
+        following={user.following_count}
+        followers={user.followers_count}
+        votes={user.votes_count}
+      />
+
+      {authenticatedUser.id !== user.id && <FollowButton user={user} />}
+
       <Feed>
-        {posts.map(post => (
-          <Post showUser={false} key={post.id} post={{ ...post }} />
-        ))}
+        {posts.length > 0 &&
+          posts.map(post => (
+            <Post showUser={false} key={post.id} post={{ ...post }} />
+          ))}
       </Feed>
-    </div>
+      {posts.length === 0 && <p>This user havent posted anything yet</p>}
+    </StyledProfile>
   );
 };
 
