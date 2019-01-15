@@ -28,6 +28,8 @@ const Links = styled.div`
   width: 100%;
   max-width: 300px;
   justify-content: center;
+  margin-top: 10px;
+  border-top: 1px solid lightgrey;
 
   a {
     flex: 1;
@@ -66,6 +68,16 @@ const Menu = ({ menuIsOpen, closeMenu }) => {
             >
               LOGOUT
             </a>
+          </Fragment>
+        )}
+        {!isAuthenticated && (
+          <Fragment>
+            <Link onClick={closeMenu} to="/login">
+              Login
+            </Link>
+            <Link onClick={closeMenu} to="/register">
+              Register
+            </Link>
           </Fragment>
         )}
       </Links>

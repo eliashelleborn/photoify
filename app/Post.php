@@ -24,6 +24,7 @@ class Post extends Model
      */
     protected $casts = [
         'user_id' => 'int',
+        'votes_count' => 'int',
         'likes_count' => 'int',
         'dislikes_count' => 'int',
     ];

@@ -56,11 +56,11 @@ class PostController extends Controller
         $posts = Post::whereIn('user_id', $userIds)
             ->latest()
             ->with(['user', 'myVote'])
-            ->withCount([
-                'votes as likes' => function ($query) {
+            ->withCount(['votes',
+                'votes as likes_count' => function ($query) {
                     $query->where('type', 'like');
                 },
-                'votes as dislikes' => function ($query) {
+                'votes as dislikes_count' => function ($query) {
                     $query->where('type', 'dislike');
                 }])
             ->get();

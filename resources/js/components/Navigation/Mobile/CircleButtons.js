@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MdHome, MdPhotoCamera } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 const StyledCircleButtons = styled.div`
   position: fixed;
@@ -13,7 +14,7 @@ const StyledCircleButtons = styled.div`
   z-index: 975;
 `;
 
-const CircleButton = styled.button`
+const CircleButton = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -24,29 +25,48 @@ const CircleButton = styled.button`
   justify-content: center;
   align-items: center;
   margin-left: 20px;
-  font-size: 20px;
+
   transform: translateX(
     ${({ startPosX, menuIsOpen }) => (menuIsOpen ? '0px' : startPosX)}
   );
   transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
   transition-delay: ${({ menuIsOpen }) => (!menuIsOpen ? '0s' : '.2s')};
   -webkit-tap-highlight-color: transparent;
+
   &:focus {
     outline: 0;
   }
-  svg {
-    color: #1d1d1d;
+
+  & > * {
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    input {
+      display: none;
+    }
+    svg {
+      color: #1d1d1d;
+    }
   }
 `;
 
-const CircleButtons = ({ menuIsOpen }) => {
+const CircleButtons = ({ menuIsOpen, closeMenu, onUpload }) => {
   return (
     <StyledCircleButtons>
       <CircleButton menuIsOpen={menuIsOpen} startPosX="155px">
-        <MdHome />
+        <Link onClick={closeMenu} to="/">
+          <MdHome />
+        </Link>
       </CircleButton>
       <CircleButton menuIsOpen={menuIsOpen} startPosX="85px">
-        <MdPhotoCamera />
+        <label>
+          <MdPhotoCamera />
+          <input type="file" accept="image/*" onChange={e => onUpload(e)} />
+        </label>
       </CircleButton>
     </StyledCircleButtons>
   );

@@ -6,12 +6,13 @@ import TimeAgo from 'react-timeago';
 import Header from './Header';
 import Overlay from './Overlay';
 import Img from '../Img';
+import VoteBar from './VoteBar';
 
 const StyledPost = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 200px;
-  z-index: -1;
+  z-index: 1;
 `;
 
 const ImageWrapper = styled.div`
@@ -27,7 +28,7 @@ const ImageWrapper = styled.div`
 `;
 
 const Post = ({ post, showUser = true }) => {
-  const [overlayOpen, setOverlayOpen] = useState(false);
+  const [overlayIsOpen, setOverlayIsOpen] = useState(false);
   return (
     <StyledPost>
       <Header
@@ -36,13 +37,14 @@ const Post = ({ post, showUser = true }) => {
         createdAt={post.created_at}
       />
       <ImageWrapper>
-        <img src={post.image} alt="" onClick={() => setOverlayOpen(true)} />
+        <img src={post.image} alt="" onClick={() => setOverlayIsOpen(true)} />
         <Overlay
-          isOpen={overlayOpen}
+          isOpen={overlayIsOpen}
           post={post}
-          close={() => setOverlayOpen(false)}
+          close={() => setOverlayIsOpen(false)}
         />
       </ImageWrapper>
+      <VoteBar overlayIsOpen={overlayIsOpen} post={post} />
     </StyledPost>
   );
 };
