@@ -11,7 +11,6 @@ import VoteBar from './VoteBar';
 const StyledPost = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 200px;
   z-index: 1;
 `;
 
@@ -25,6 +24,10 @@ const ImageWrapper = styled.div`
     left: 0;
     top: 0;
   }
+`;
+
+const Description = styled.div`
+  padding: 20px;
 `;
 
 const Post = ({ post, showUser = true }) => {
@@ -45,6 +48,8 @@ const Post = ({ post, showUser = true }) => {
         />
       </ImageWrapper>
       <VoteBar overlayIsOpen={overlayIsOpen} post={post} />
+
+      {post.description && <Description>{post.description}</Description>}
     </StyledPost>
   );
 };
