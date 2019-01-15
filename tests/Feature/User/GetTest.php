@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Follow;
 use App\User;
 use App\Vote;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -42,6 +43,32 @@ class UserGetTest extends TestCase
         $this->json('GET', 'api/users/' . $vote->user_id . '/votes')
             ->assertStatus(200)
             ->assertJsonCount(1);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_users_followers()
+    {
+        $follow = factory(Follow::class)->create();
+
+        $this->json('GET', 'api/users/' . $follow->followee_id . '/followers')
+            ->assertStatus(200)
+            ->assertJsonCount(1)
+            ->assertJson([['id' => $follow->follower_id]]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_users_following()
+    {
+        $follow = factory(Follow::class)->create();
+
+        $this->json('GET', 'api/users/' . $follow->follower_id . '/following')
+            ->assertStatus(200)
+            ->assertJsonCount(1)
+            ->assertJson([['id' => $follow->followee_id]]);
     }
 
     /**
