@@ -40,11 +40,19 @@ class PostController extends Controller
 
     public function postsByUser(User $user)
     {
-        $posts = $user->posts()
-            ->latest()
-            ->with(['myVote'])
-            ->withCount(['likes', 'dislikes'])
-            ->get();
+        $post = null;
+        if (Auth::check()) {
+            $posts = $user->posts()
+                ->latest()
+                ->with(['myVote'])
+                ->withCount(['likes', 'dislikes'])
+                ->get();
+        } else {
+            $posts = $user->posts()
+                ->latest()
+                ->withCount(['likes', 'dislikes'])
+                ->get();
+        }
 
         return response()->json($posts);
     }
