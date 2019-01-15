@@ -25,13 +25,20 @@ const CircleButton = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 20px;
+  cursor: pointer;
 
   transform: translateX(
     ${({ startPosX, menuIsOpen }) => (menuIsOpen ? '0px' : startPosX)}
   );
-  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-  transition-delay: ${({ menuIsOpen }) => (!menuIsOpen ? '0s' : '.2s')};
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)
+      ${({ menuIsOpen }) => (!menuIsOpen ? '0s' : '.2s')},
+    box-shadow 0.2s ease-in-out;
   -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    box-shadow: 0 2px 3px 0px rgba(167, 167, 167, 0.5);
+    background-color: #fcfcfc;
+  }
 
   &:focus {
     outline: 0;
@@ -44,7 +51,7 @@ const CircleButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
+    cursor: pointer;
     input {
       display: none;
     }

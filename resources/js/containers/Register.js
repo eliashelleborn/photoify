@@ -4,25 +4,30 @@ import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-
-import { Field, Label } from '../components/Form';
-import { Button } from '../components/Button';
 import axios from 'axios';
 import { useAction, useStore } from 'easy-peasy';
 
-const StyledRegister = styled.div`
+import { Field, Label, ErrorBox } from '../components/Form';
+import { Button } from '../components/Button';
+import { Container } from '../components/Container';
+
+const StyledRegister = styled(Container)`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
+  h1 {
+    margin: 0;
+  }
+
   form {
     width: 100%;
-    padding: 0 25px;
-
-    & > * {
-      width: 100%;
-    }
+    display: flex;
+    padding: 0 20px;
+    align-items: center;
+    flex-direction: column;
   }
 `;
 
@@ -50,7 +55,7 @@ const Register = props => {
 
   return (
     <StyledRegister>
-      <h1>Register</h1>
+      <h1>REGISTER</h1>
       <Formik
         initialValues={{
           email: '',
@@ -61,7 +66,6 @@ const Register = props => {
         }}
         validationSchema={RegisterSchema}
         onSubmit={async (values, actions) => {
-          console.log(values);
           try {
             const res = await axios.post('/api/auth/register', values);
             localStorage.setItem('access_token', res.data.access_token);
@@ -74,29 +78,45 @@ const Register = props => {
           }
         }}
       >
-        {({ isSubmitting, errors }) => (
-          <Form>
-            <Label name="email" />
-            <Field type="email" name="email" />
+        {({ isSubmitting, errors }) => {
+          return (
+            <Form>
+              <Label name="email" />
+              <Field type="email" name="email" />
 
-            <Label name="username" />
-            <Field type="text" name="username" />
+              <Label name="username" />
+              <Field type="text" name="username" />
 
-            <Label name="password" />
-            <Field type="password" name="password" />
+              <Label name="password" />
+              <Field type="password" name="password" />
 
-            <Label name="confirmPassword">Confirm password</Label>
-            <Field type="password" name="confirmPassword" />
+              <Label name="confirmPassword">Confirm password</Label>
+              <Field type="password" name="confirmPassword" />
 
-            <Label name="name" />
-            <Field type="text" name="name" />
+              <Label name="name" />
+              <Field type="text" name="name" />
 
-            <Button type="submit" disabled={isSubmitting}>
-              Register
-            </Button>
-            {errors.api && <p>{errors.api.message}</p>}
-          </Form>
-        )}
+              <Button type="submit" disabled={isSubmitting}>
+                Register
+              </Button>
+
+              {errors.api && (
+                <ErrorBox>
+                  <ul>
+                    {errors.api.errors.email &&
+                      errors.api.errors.email.map((error, i) => (
+                        <li key={i}>{error}</li>
+                      ))}
+                    {errors.api.errors.username &&
+                      errors.api.errors.username.map((error, i) => (
+                        <li key={i}>{error}</li>
+                      ))}
+                  </ul>
+                </ErrorBox>
+              )}
+            </Form>
+          );
+        }}
       </Formik>
     </StyledRegister>
   );

@@ -16,6 +16,12 @@ const StyledMenuButton = styled.div`
   font-size: 33px;
   background-color: #fff;
   z-index: 1000;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    box-shadow: 0 2px 3px 0px rgba(167, 167, 167, 0.5);
+    background-color: #fcfcfc;
+  }
+
   button {
     color: #1d1d1d;
     -webkit-tap-highlight-color: transparent;

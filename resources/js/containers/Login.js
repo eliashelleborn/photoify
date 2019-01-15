@@ -4,17 +4,31 @@ import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-
-import { Field, Label } from '../components/Form';
-import { Button } from '../components/Button';
 import axios from 'axios';
 import { useAction, useStore } from 'easy-peasy';
 
-const StyledLogin = styled.div`
+import { Field, Label, ErrorBox } from '../components/Form';
+import { Button } from '../components/Button';
+import { Container } from '../components/Container';
+
+const StyledLogin = styled(Container)`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  h1 {
+    margin: 0;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    padding: 0 20px;
+    align-items: center;
+    flex-direction: column;
+  }
 `;
 
 const LoginSchema = Yup.object().shape({
@@ -33,7 +47,7 @@ const Login = props => {
 
   return (
     <StyledLogin>
-      <h1>Login</h1>
+      <h1>LOGIN</h1>
       <Formik
         initialValues={{
           email: '',
@@ -63,9 +77,16 @@ const Login = props => {
             <Field type="password" name="password" />
 
             <Button type="submit" disabled={isSubmitting}>
-              Submit
+              Login
             </Button>
-            {errors.api && <p>{errors.api.message}</p>}
+
+            {errors.api && (
+              <ErrorBox>
+                <ul>
+                  <li>{errors.api.message}</li>
+                </ul>
+              </ErrorBox>
+            )}
           </Form>
         )}
       </Formik>

@@ -29,7 +29,6 @@ const Links = styled.div`
   max-width: 300px;
   justify-content: center;
   margin-top: 10px;
-  border-top: 1px solid lightgrey;
 
   a {
     flex: 1;
@@ -40,6 +39,7 @@ const Links = styled.div`
     color: inherit;
     font-weight: bold;
     font-size: 18px;
+    cursor: pointer;
   }
 `;
 
