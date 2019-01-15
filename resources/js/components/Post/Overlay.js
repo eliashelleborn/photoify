@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { MdMoreVert } from 'react-icons/md';
 
-import Vote from './Vote';
+import VoteButtons from './VoteButtons';
 
 const StyledOverlay = styled.div`
   position: absolute;
@@ -19,9 +20,12 @@ const StyledOverlay = styled.div`
 
 const Content = styled.div`
   z-index: 50;
+  height: 100%;
+  pointer-events: none;
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
 `;
 
 const ClickMask = styled.div`
@@ -33,12 +37,29 @@ const ClickMask = styled.div`
   z-index: 40;
 `;
 
+const Options = styled.div`
+  margin-bottom: auto;
+  display: flex;
+  justify-content: flex-end;
+  button {
+    color: #fff;
+    font-size: 35px;
+    margin-right: -7px;
+    pointer-events: all;
+  }
+`;
+
 const Overlay = ({ isOpen, close, post }) => {
   return (
     <StyledOverlay isOpen={isOpen}>
       <ClickMask onClick={close} />
       <Content>
-        <Vote post={post} />
+        <Options>
+          <button onClick={() => console.log('click options')}>
+            <MdMoreVert />
+          </button>
+        </Options>
+        <VoteButtons post={post} />
       </Content>
     </StyledOverlay>
   );

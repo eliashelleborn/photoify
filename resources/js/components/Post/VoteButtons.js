@@ -2,16 +2,30 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useStore } from 'easy-peasy';
+import { MdThumbUp, MdThumbDown } from 'react-icons/md';
 
 const StyledVote = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
-const StatBar = styled.div``;
-
 const VoteButton = styled.button`
-  background-color: ${props => (props.votedOn ? 'blue' : 'white')};
+  background: none;
+  border: none;
   padding: 10px;
+  font-size: 35px;
+  pointer-events: all;
+  &:focus {
+    outline: 0;
+  }
+`;
+
+const Like = styled(VoteButton)`
+  color: ${({ votedOn }) => (votedOn ? '#73C37B' : '#fff')};
+`;
+
+const Dislike = styled(VoteButton)`
+  color: ${({ votedOn }) => (votedOn ? '#E36E6E' : '#fff')};
 `;
 
 const postVote = (postId, voteType, accessToken) => {
@@ -40,8 +54,7 @@ const Vote = ({ post }) => {
   const [dislikes, setDislikes] = useState(post.dislikes_count);
   return (
     <StyledVote>
-      <p>My Vote: {myVote && myVote.type}</p>
-      <VoteButton
+      <Like
         votedOn={myVote && myVote.type === 'like'}
         onClick={() => {
           if (myVote && myVote.type === 'like') {
@@ -60,13 +73,9 @@ const Vote = ({ post }) => {
           }
         }}
       >
-        Like
-      </VoteButton>
-      <StatBar>
-        <span>likes {likes}</span>
-        <span>dislikes {dislikes}</span>
-      </StatBar>
-      <VoteButton
+        <MdThumbUp />
+      </Like>
+      <Dislike
         votedOn={myVote && myVote.type === 'dislike'}
         onClick={() => {
           if (myVote && myVote.type === 'dislike') {
@@ -85,8 +94,8 @@ const Vote = ({ post }) => {
           }
         }}
       >
-        Dislike
-      </VoteButton>
+        <MdThumbDown />
+      </Dislike>
     </StyledVote>
   );
 };
