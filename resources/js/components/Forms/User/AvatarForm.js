@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useAction, useStore } from 'easy-peasy';
 import styled from 'styled-components';
 import * as Yup from 'yup';
@@ -55,6 +55,7 @@ const AvatarForm = props => {
   const [croppedImage, setCroppedImage] = useState(null);
   const [cropIsOpen, setCropIsOpen] = useState(false);
   const [error, setError] = useState(null);
+  const uploadInput = useRef(null);
   return (
     <StyledAvatarForm>
       <ImageComparison>
@@ -85,6 +86,7 @@ const AvatarForm = props => {
           <label>
             Choose new image
             <input
+              ref={uploadInput}
               type="file"
               accept="image/*"
               onChange={e => {
@@ -164,6 +166,7 @@ const AvatarForm = props => {
         cropIsOpen && (
           <CropImage
             close={() => {
+              uploadInput.current.value = '';
               setCropIsOpen(false);
             }}
             handleCroppedImage={data => {
