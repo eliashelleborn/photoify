@@ -10,6 +10,7 @@ import { Label, Field } from '../components/Form';
 import { Button } from '../components/Button';
 import AvatarForm from '../components/Forms/User/AvatarForm';
 import UserInfoForm from '../components/Forms/User/UserInfoForm';
+import ChangePasswordForm from '../components/Forms/User/ChangePasswordForm';
 import DeleteUserForm from '../components/Forms/User/DeleteUserForm';
 
 const StyledSettings = styled(Container)`
@@ -18,6 +19,7 @@ const StyledSettings = styled(Container)`
   flex-direction: column;
   align-items: center;
   padding-top: 25px;
+  padding-bottom: 100px;
 
   h1 {
     margin: 0;
@@ -50,7 +52,14 @@ const Settings = () => {
 
       <SectionHeader>Avatar</SectionHeader>
       <AvatarForm />
+
+      <SectionHeader>Info</SectionHeader>
       <UserInfoForm />
+
+      <SectionHeader>Change Password</SectionHeader>
+      <ChangePasswordForm />
+
+      <SectionHeader>Danger Zone</SectionHeader>
       <DeleteUserForm />
     </StyledSettings>
   );
