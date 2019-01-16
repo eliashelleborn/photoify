@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { MdDelete, MdEdit } from 'react-icons/md';
 
 import VoteButtons from './VoteButtons';
+import { useStore } from 'easy-peasy';
 
 const StyledOverlay = styled.div`
   position: absolute;
@@ -51,15 +52,18 @@ const Options = styled.div`
 `;
 
 const Overlay = ({ isOpen, close, post }) => {
+  const { authenticatedUser } = useStore(state => state.auth);
   return (
     <StyledOverlay isOpen={isOpen}>
       <ClickMask onClick={close} />
       <Content>
-        <Options>
-          <Link to={`/edit-post?post=${post.id}`}>
-            <MdEdit />
-          </Link>
-        </Options>
+        {authenticatedUser.id === post.user_id && (
+          <Options>
+            <Link to={`/edit-post?post=${post.id}`}>
+              <MdEdit />
+            </Link>
+          </Options>
+        )}
         <VoteButtons post={post} />
       </Content>
     </StyledOverlay>
