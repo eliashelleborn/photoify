@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { MdHome, MdPhotoCamera } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { useStore } from 'easy-peasy';
 
 const StyledCircleButtons = styled.div`
   position: fixed;
@@ -62,19 +63,25 @@ const CircleButton = styled.div`
 `;
 
 const CircleButtons = ({ menuIsOpen, closeMenu, onUpload }) => {
+  const { authenticatedUser, isAuthenticated } = useStore(state => state.auth);
   return (
     <StyledCircleButtons>
-      <CircleButton menuIsOpen={menuIsOpen} startPosX="155px">
+      <CircleButton
+        menuIsOpen={menuIsOpen}
+        startPosX={isAuthenticated ? '155px' : '85px'}
+      >
         <Link onClick={closeMenu} to="/">
           <MdHome />
         </Link>
       </CircleButton>
-      <CircleButton menuIsOpen={menuIsOpen} startPosX="85px">
-        <label>
-          <MdPhotoCamera />
-          <input type="file" accept="image/*" onChange={e => onUpload(e)} />
-        </label>
-      </CircleButton>
+      {isAuthenticated && (
+        <CircleButton menuIsOpen={menuIsOpen} startPosX="85px">
+          <label>
+            <MdPhotoCamera />
+            <input type="file" accept="image/*" onChange={e => onUpload(e)} />
+          </label>
+        </CircleButton>
+      )}
     </StyledCircleButtons>
   );
 };
