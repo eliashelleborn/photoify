@@ -10,6 +10,12 @@ const StyledCropImage = styled.div`
   width: 100vw;
   button {
     position: absolute;
+    padding: 5px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #000;
+    border-radius: 3px;
+    border: none;
 
     &:first-of-type {
       top: 10px;

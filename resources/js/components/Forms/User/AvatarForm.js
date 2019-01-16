@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { Formik, Form } from 'formik';
 
-import { Label, Field } from '../../Form';
+import { Label, Field, ErrorBox } from '../../Form';
 import { Button } from '../../Button';
 import CropImage from '../../CropImage';
 
@@ -50,6 +50,7 @@ const AvatarForm = props => {
   const [uncroppedImage, setUncroppedImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [cropIsOpen, setCropIsOpen] = useState(false);
+  const [error, setError] = useState(null);
   return (
     <StyledAvatarForm>
       <ImageComparison>
@@ -76,8 +77,14 @@ const AvatarForm = props => {
             type="file"
             accept="image/*"
             onChange={e => {
-              setUncroppedImage(URL.createObjectURL(e.target.files[0]));
-              setCropIsOpen(true);
+              console.log(e.target.files[0]);
+              if (e.target.files[0].size <= 1000000) {
+                setUncroppedImage(URL.createObjectURL(e.target.files[0]));
+                setCropIsOpen(true);
+                setError(null);
+              } else {
+                setError('Image file size is too big (Max 1mb)');
+              }
             }}
           />
         </label>
@@ -106,6 +113,7 @@ const AvatarForm = props => {
                     .then(res => {
                       authActions.setAuthenticatedUser(res.data);
                       setCroppedImage(null);
+                      setError(null);
                     });
                 });
             } catch (error) {
@@ -131,57 +139,13 @@ const AvatarForm = props => {
           />
         )}
 
-      {/* <Formik
-        initialValues={{ file: null }}
-        validationSchema={Yup.object().shape({
-          avatar: Yup.mixed().required()
-        })}
-        onSubmit={values => {
-          try {
-            const formData = new FormData();
-            formData.append('avatar', croppedImage);
-            axios.post(
-              `/api/users/${authenticatedUser.id}/update_avatar`,
-              formData,
-              {
-                headers: {
-                  'Content-Type': 'multipart/form-data',
-                  Authorization: `Bearer ${accessToken}`
-                }
-              }
-            );
-          } catch (error) {}
-        }}
-      >
-        {({ values, handleSubmit, setFieldValue }) => (
-          <Form>
-            <input
-              name="avatar"
-              type="file"
-              onChange={event => {
-                setFieldValue('avatar', event.currentTarget.files[0]);
-                setCropIsActive(true);
-              }}
-            />
-            {values.avatar &&
-              cropIsActive && (
-                <CropImage
-                  close={() => {
-                    setFieldValue('avatar', null);
-                    setCropIsActive(false);
-                  }}
-                  handleCroppedImage={data => {
-                    setCroppedImage(data);
-                    setFieldValue('avatar', null);
-                  }}
-                  image={URL.createObjectURL(values.avatar)}
-                />
-              )}
-            {croppedImage && <img src={croppedImage} alt="" />}
-            <button type="submit">Upload</button>
-          </Form>
-        )}
-      </Formik> */}
+      {error && (
+        <ErrorBox>
+          <ul>
+            <li>{error}</li>
+          </ul>
+        </ErrorBox>
+      )}
     </StyledAvatarForm>
   );
 };
