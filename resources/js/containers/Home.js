@@ -5,11 +5,48 @@ import { useStore } from 'easy-peasy';
 
 // Components
 import Post from '../components/Post/';
+import Search from '../components/Search';
 import { Container } from '../components/Container';
+import { LinkButton } from '../components/Button';
 
 const Feed = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
+`;
+
+const GuestHomepage = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  justify-content: center;
+  min-height: 100vh;
+
+  h1 {
+    margin: 0 0 10px 0;
+    font-size: 25px;
+  }
+  p {
+    margin: 5px 0;
+  }
+  & > div {
+    margin-top: 10px;
+    display: flex;
+    a {
+      flex: 1;
+      margin: 10px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+`;
+
+const SearchWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
 `;
 
 const getFeed = accessToken => {
@@ -19,13 +56,14 @@ const getFeed = accessToken => {
 };
 
 const Home = () => {
-  const authState = useStore(state => state.auth);
+  const { isAuthenticated, accessToken } = useStore(state => state.auth);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [feed, setFeed] = useState(null);
+
   useEffect(() => {
-    if (authState.isAuthenticated) {
-      getFeed(authState.accessToken)
+    if (isAuthenticated) {
+      getFeed(accessToken)
         .then(res => {
           setFeed(res.data);
           setLoading(false);
@@ -42,10 +80,42 @@ const Home = () => {
   if (loading) return null;
   return (
     <Fragment>
-      {authState.isAuthenticated && (
+      {isAuthenticated ? (
         <Feed>
-          {feed && feed.map(post => <Post key={post.id} post={{ ...post }} />)}
+          {feed &&
+            feed.map(post => (
+              <Post
+                key={post.id}
+                post={{ ...post }}
+                deletePost={() =>
+                  setModalState({ content: 'delete-post', show: true })
+                }
+                editPost={() =>
+                  setModalState({ content: 'edit-post', show: true })
+                }
+              />
+            ))}
         </Feed>
+      ) : (
+        <GuestHomepage>
+          <SearchWrapper>
+            <Search />
+          </SearchWrapper>
+
+          <h1>Welcome to Photoify!</h1>
+          <p>
+            To fully enjoy this application you should login or create a new
+            account.
+          </p>
+          <p>
+            With Photoify you can share your life in pictures with friends
+            and/or fans.
+          </p>
+          <div>
+            <LinkButton to="/login">LOGIN</LinkButton>
+            <LinkButton to="/register">REGISTER</LinkButton>
+          </div>
+        </GuestHomepage>
       )}
     </Fragment>
   );
