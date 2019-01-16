@@ -12,6 +12,7 @@ const StyledPost = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
+  overflow: hidden;
 `;
 
 const ImageWrapper = styled.div`

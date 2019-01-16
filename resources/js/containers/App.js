@@ -15,10 +15,10 @@ import Register from './Register';
 import Profile from './Profile';
 import Settings from './Settings';
 import CreatePost from './CreatePost';
+import EditPost from './EditPost';
 
 // Components
 import MobileNavigation from '../components/Navigation/Mobile/';
-/* import Navbar from '../components/Navbar/index'; */
 
 const App = () => {
   const authState = useStore(state => state.auth);
@@ -63,6 +63,7 @@ const App = () => {
             <AuthenticationRoute path="/register" component={Register} />
 
             <ProtectedRoute path="/create-post" component={CreatePost} />
+            <ProtectedRoute path="/edit-post" component={EditPost} />
 
             <ProtectedRoute path="/settings" component={Settings} />
 

@@ -19,20 +19,19 @@ const Dislikes = styled.div`
 
 const Count = styled.div`
   height: 30px;
-  width: 2px;
+  width: 1px;
   background-color: #fff;
   z-index: 900;
   margin-top: -20px;
   position: relative;
   opacity: ${({ visible }) => (visible ? '1' : '0')};
   transition: 0.3s ease;
-  overflow: hidden;
   span {
     position: absolute;
     top: 0;
     color: #fff;
-    font-size: 16;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: normal;
   }
   span:first-child {
     right: 7px;

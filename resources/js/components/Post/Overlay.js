@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MdMoreVert } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import { MdDelete, MdEdit } from 'react-icons/md';
 
 import VoteButtons from './VoteButtons';
 
@@ -41,7 +42,7 @@ const Options = styled.div`
   margin-bottom: auto;
   display: flex;
   justify-content: flex-end;
-  button {
+  a {
     color: #fff;
     font-size: 35px;
     margin-right: -7px;
@@ -55,9 +56,9 @@ const Overlay = ({ isOpen, close, post }) => {
       <ClickMask onClick={close} />
       <Content>
         <Options>
-          <button onClick={() => console.log('click options')}>
-            <MdMoreVert />
-          </button>
+          <Link to={`/edit-post?post=${post.id}`}>
+            <MdEdit />
+          </Link>
         </Options>
         <VoteButtons post={post} />
       </Content>

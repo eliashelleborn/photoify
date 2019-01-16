@@ -133,7 +133,7 @@ class PostController extends Controller
                 $post->image = Storage::url($path);
             }
 
-            $post->description = $request->description ?? $post->description;
+            $post->description = $request->description; /* ?? $post->description; */
 
             $post->save();
 
