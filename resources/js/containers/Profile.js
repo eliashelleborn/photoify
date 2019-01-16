@@ -7,8 +7,9 @@ import { useStore } from 'easy-peasy';
 import Post from '../components/Post/';
 import FollowButton from '../components/FollowButton';
 import UserStats from '../components/UserStats';
+import { Container } from '../components/Container';
 
-const StyledProfile = styled.div`
+const StyledProfile = styled(Container)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,9 +46,16 @@ const UserInfo = styled.div`
 
 const Feed = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 auto;
+  max-width: 960px;
   width: 100%;
-  margin-top: 15px;
+
+  @media screen and (min-width: 400px) {
+    padding-top: 25px;
+  }
 `;
 
 const Profile = ({ match }) => {

@@ -17,8 +17,15 @@ const StyledHome = styled.div`
 
 const Feed = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
   margin: 0 auto;
+  max-width: 960px;
+
+  @media screen and (min-width: 400px) {
+    padding-top: 25px;
+  }
 `;
 
 const GuestHomepage = styled(Container)`

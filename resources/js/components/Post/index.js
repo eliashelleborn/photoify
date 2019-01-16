@@ -13,6 +13,12 @@ const StyledPost = styled.div`
   flex-direction: column;
   z-index: 1;
   overflow: hidden;
+  max-width: 400px;
+  width: 100%;
+
+  @media screen and (min-width: 800px) {
+    margin-bottom: 50px;
+  }
 `;
 
 const ImageWrapper = styled.div`
