@@ -28,7 +28,7 @@ const StyledCropImage = styled.div`
   }
 `;
 
-const CropImage = ({ image, handleCroppedImage, close }) => {
+const CropImage = ({ image, handleCroppedImage, close, fromCreatePost }) => {
   const cropper = useRef(null);
   return (
     <StyledCropImage>
@@ -46,7 +46,7 @@ const CropImage = ({ image, handleCroppedImage, close }) => {
       <button
         onClick={() => {
           handleCroppedImage(cropper.current.getCroppedCanvas().toDataURL());
-          close();
+          !fromCreatePost && close();
         }}
       >
         Done

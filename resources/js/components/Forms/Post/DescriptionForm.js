@@ -20,7 +20,7 @@ const DescriptionForm = ({ post, setPost }) => {
   const { accessToken, authenticatedUser } = useStore(state => state.auth);
   const authActions = useAction(dispatch => dispatch.auth);
   const initialValues = {
-    description: post.description
+    description: post.description || ''
   };
 
   return (

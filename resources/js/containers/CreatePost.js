@@ -1,85 +1,94 @@
 import React, { useState, useRef, Fragment } from 'react';
 import Cropper from 'react-cropper';
 import { Formik, Form } from 'formik';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { useStore } from 'easy-peasy';
 
 // Components
 import { Field, Label } from '../components/Form';
+import CropImage from '../components/CropImage';
+import { Button } from '../components/Button';
 
 const CreatePost = props => {
   const authState = useStore(state => state.auth);
-  const [stage, setStage] = useState('crop');
   const [croppedImage, setCroppedImage] = useState(null);
-  const cropper = useRef(null);
+  const [redirect, setRedirect] = useState(false);
   const {
     state: { image }
   } = props.location;
+
+  if (redirect || (!image && !croppedImage)) return <Redirect to="/" />;
   return (
     <Fragment>
-      {stage === 'crop' && (
+      {!croppedImage && (
         <Fragment>
-          <Cropper
-            ref={cropper}
-            src={image}
-            style={{
-              width: '100vw',
-              maxHeight: 'calc(100vh - 51px)'
-            }}
-            dragMode="move"
-            aspectRatio={1 / 1}
-          />
-          <button
-            onClick={() => {
-              setCroppedImage(cropper.current.getCroppedCanvas().toDataURL());
-              setStage('text');
-            }}
-          >
-            Done
-          </button>
-        </Fragment>
-      )}
-      {stage === 'text' && (
-        <Fragment>
-          <img style={{ maxWidth: '100%' }} src={croppedImage} alt="" />
-          <Formik
-            initialValues={{
-              description: ''
-            }}
-            onSubmit={async (values, actions) => {
-              try {
-                // Get blob from url
-                fetch(croppedImage)
-                  .then(res => res.blob())
-                  .then(blob => {
-                    // Send formData to endpoint
-                    const formData = new FormData();
-                    formData.append('image', blob);
-                    if (values.description !== '') {
-                      formData.append('description', values.description);
-                    }
-                    axios.post(`/api/posts/`, formData, {
-                      headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${authState.accessToken}`
-                      }
-                    });
-                  });
-              } catch (error) {
-                console.log(error);
+          <CropImage
+            fromCreatePost={true}
+            close={() => {
+              const input = document.getElementById('photo-upload');
+              input.value = '';
+              if (!croppedImage) {
+                setRedirect(true);
               }
             }}
-          >
-            {({ status, errors }) => (
-              <Form>
-                <Label name="description" />
-                <Field type="text" name="description" />
-                <button type="submit">Done</button>
-              </Form>
-            )}
-          </Formik>
+            handleCroppedImage={data => {
+              setCroppedImage(data);
+              const input = document.getElementById('photo-upload');
+              input.value = '';
+            }}
+            image={image}
+          />
         </Fragment>
       )}
+
+      <img style={{ maxWidth: '100%' }} src={croppedImage} alt="" />
+      <Formik
+        initialValues={{
+          description: ''
+        }}
+        onSubmit={async (values, actions) => {
+          try {
+            // Get blob from url
+            fetch(croppedImage)
+              .then(res => res.blob())
+              .then(blob => {
+                // Send formData to endpoint
+                const formData = new FormData();
+                formData.append('image', blob);
+                if (values.description !== '') {
+                  formData.append('description', values.description);
+                }
+                axios
+                  .post(`/api/posts/`, formData, {
+                    headers: {
+                      'Content-Type': 'multipart/form-data',
+                      Authorization: `Bearer ${authState.accessToken}`
+                    }
+                  })
+                  .then(() => {
+                    setRedirect(true);
+                  });
+              });
+          } catch (error) {
+            console.log(error);
+          }
+        }}
+      >
+        {({ status, errors }) => (
+          <Form>
+            <Field
+              style={{ border: 'none' }}
+              placeholder="Description..."
+              type="text"
+              name="description"
+              component="textarea"
+              rows="5"
+            />
+            <Button type="submit">Create</Button>
+          </Form>
+        )}
+      </Formik>
     </Fragment>
   );
 };

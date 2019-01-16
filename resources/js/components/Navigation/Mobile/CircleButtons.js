@@ -78,7 +78,19 @@ const CircleButtons = ({ menuIsOpen, closeMenu, onUpload }) => {
         <CircleButton menuIsOpen={menuIsOpen} startPosX="85px">
           <label>
             <MdPhotoCamera />
-            <input type="file" accept="image/*" onChange={e => onUpload(e)} />
+            <input
+              type="file"
+              id="photo-upload"
+              accept="image/*"
+              onChange={e => {
+                if (e.target.files[0].size > 1000000) {
+                  e.target.value = '';
+                  console.log('Image too big');
+                } else {
+                  onUpload(e);
+                }
+              }}
+            />
           </label>
         </CircleButton>
       )}

@@ -77,12 +77,12 @@ const ImageForm = ({ post, setPost }) => {
             type="file"
             accept="image/*"
             onChange={e => {
-              console.log(e.target.files[0]);
               if (e.target.files[0].size <= 1000000) {
                 setUncroppedImage(URL.createObjectURL(e.target.files[0]));
                 setCropIsOpen(true);
                 setError(null);
               } else {
+                e.target.value = '';
                 setError('Image file size is too big (Max 1mb)');
               }
             }}
