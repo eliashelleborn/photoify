@@ -9,7 +9,7 @@ export const Field = styled(BaseField)`
   border: 1px solid lightgrey;
   border-radius: 3px;
   width: 100%;
-  max-width: 500px;
+  /*   max-width: 500px; */
 
   &:focus {
     outline: none;
@@ -22,7 +22,7 @@ const StyledLabel = styled.div`
   margin-top: 20px;
   margin-bottom: 5px;
   width: 100%;
-  max-width: 500px;
+  /*   max-width: 500px; */
 
   & > label {
     text-transform: capitalize;
