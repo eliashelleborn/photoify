@@ -11,6 +11,7 @@ import { Label, Field } from '../components/Form';
 import { Button } from '../components/Button';
 import ImageForm from '../components/Forms/Post/ImageForm';
 import DescriptionForm from '../components/Forms/Post/DescriptionForm';
+import DeletePostForm from '../components/Forms/Post/DeletePostForm';
 
 const StyledEditPost = styled(Container)`
   min-height: 100vh;
@@ -79,6 +80,9 @@ const EditPost = ({ location }) => {
 
           <SectionHeader>Description</SectionHeader>
           <DescriptionForm post={post} setPost={setPost} />
+
+          <SectionHeader>Delete Post</SectionHeader>
+          <DeletePostForm post={post} redirect={() => setRedirect(true)} />
         </Fragment>
       )}
     </StyledEditPost>

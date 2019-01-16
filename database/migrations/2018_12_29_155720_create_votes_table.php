@@ -25,6 +25,10 @@ class CreateVotesTable extends Migration
                 ->references('id')->on('users')
                 ->onDelete('cascade');
 
+            $table->foreign('voted_id')
+                ->references('id')->on('posts')
+                ->onDelete('cascade');
+
             $table->unique(['user_id', 'voted_id', 'voted_type']);
         });
     }
