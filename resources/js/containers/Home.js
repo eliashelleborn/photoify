@@ -22,6 +22,7 @@ const Feed = styled.div`
   justify-content: space-around;
   margin: 0 auto;
   max-width: 960px;
+  width: 100%;
 
   @media screen and (min-width: 400px) {
     padding-top: 25px;
@@ -84,10 +85,27 @@ const Home = () => {
   if (loading) return null;
   return (
     <StyledHome>
+      {isAuthenticated &&
+        feed.length === 0 && (
+          <Container style={{ paddingTop: '20px' }}>
+            <Search />
+            <p
+              style={{
+                fontSize: '18px',
+                marginTop: '15px',
+                color: 'grey',
+                textAlign: 'center'
+              }}
+            >
+              Cand find any posts for you. Try finding someone to follow by
+              searching above.
+            </p>
+          </Container>
+        )}
       <Fragment>
         {isAuthenticated ? (
           <Feed>
-            {feed &&
+            {feed.length > 0 &&
               feed.map(post => (
                 <Post
                   key={post.id}

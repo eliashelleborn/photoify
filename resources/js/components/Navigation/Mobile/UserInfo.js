@@ -37,9 +37,12 @@ const Avatar = styled.div`
 const UserInfo = ({ user }) => {
   return (
     <StyledUserInfo>
-      <Avatar>
-        <img src={user.avatar} alt="" />
-      </Avatar>
+      {user.avatar && (
+        <Avatar>
+          <img src={user.avatar} alt="" />
+        </Avatar>
+      )}
+
       <h3>{user.username}</h3>
       <UserStats
         following={user.following_count}

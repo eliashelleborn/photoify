@@ -44,7 +44,9 @@ const PostHeader = ({ user, createdAt, showUser }) => {
     <StyledHeader>
       {showUser && (
         <Link to={`/${user.username}`}>
-          <Img src={user.avatar} alt="" width="40px" height="40px" />
+          {user.avatar && (
+            <Img src={user.avatar} alt="" width="40px" height="40px" />
+          )}
           <p>{user.username}</p>
         </Link>
       )}
