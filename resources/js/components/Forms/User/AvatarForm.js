@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { Formik, Form } from 'formik';
+import { MdDelete, MdFileUpload } from 'react-icons/md';
 
 import { Label, Field, ErrorBox } from '../../Form';
 import { Button } from '../../Button';
@@ -39,12 +40,17 @@ const Buttons = styled.div`
   }
   label,
   button {
-    padding: 10px;
+    padding: 7px 10px;
     cursor: pointer;
     border: 1px solid lightgrey;
     border-radius: 3px;
     margin: 5px;
     background-color: white;
+  }
+
+  button {
+    color: #fff;
+    border: none;
   }
 `;
 
@@ -82,65 +88,65 @@ const AvatarForm = props => {
       </ImageComparison>
 
       <Buttons>
-        <div>
-          <label>
-            Choose new image
-            <input
-              ref={uploadInput}
-              type="file"
-              accept="image/*"
-              onChange={e => {
-                console.log(e.target.files[0]);
-                if (e.target.files[0].size <= 1000000) {
-                  setUncroppedImage(URL.createObjectURL(e.target.files[0]));
-                  setCropIsOpen(true);
-                  setError(null);
-                } else {
-                  setError('Image file size is too big (Max 1mb)');
-                }
-              }}
-            />
-          </label>
-
-          <button
-            onClick={() => {
-              try {
-                // Get blob from url
-                fetch(croppedImage)
-                  .then(res => res.blob())
-                  .then(blob => {
-                    // Send formData to endpoint
-                    const formData = new FormData();
-                    formData.append('avatar', blob);
-                    axios
-                      .post(
-                        `/api/users/${authenticatedUser.id}/update_avatar`,
-                        formData,
-                        {
-                          headers: {
-                            'Content-Type': 'multipart/form-data',
-                            Authorization: `Bearer ${accessToken}`
-                          }
-                        }
-                      )
-                      .then(res => {
-                        authActions.setAuthenticatedUser({
-                          ...authenticatedUser,
-                          avatar: res.data.avatar
-                        });
-                        setCroppedImage(null);
-                        setError(null);
-                      });
-                  });
-              } catch (error) {
-                console.log(error);
+        <label>
+          Choose new image
+          <input
+            ref={uploadInput}
+            type="file"
+            accept="image/*"
+            onChange={e => {
+              console.log(e.target.files[0]);
+              if (e.target.files[0].size <= 1000000) {
+                setUncroppedImage(URL.createObjectURL(e.target.files[0]));
+                setCropIsOpen(true);
+                setError(null);
+              } else {
+                setError('Image file size is too big (Max 1mb)');
               }
             }}
-          >
-            Update Avatar
-          </button>
-        </div>
+          />
+        </label>
+
         <button
+          style={{ backgroundColor: '#73C37B' }}
+          onClick={() => {
+            try {
+              // Get blob from url
+              fetch(croppedImage)
+                .then(res => res.blob())
+                .then(blob => {
+                  // Send formData to endpoint
+                  const formData = new FormData();
+                  formData.append('avatar', blob);
+                  axios
+                    .post(
+                      `/api/users/${authenticatedUser.id}/update_avatar`,
+                      formData,
+                      {
+                        headers: {
+                          'Content-Type': 'multipart/form-data',
+                          Authorization: `Bearer ${accessToken}`
+                        }
+                      }
+                    )
+                    .then(res => {
+                      authActions.setAuthenticatedUser({
+                        ...authenticatedUser,
+                        avatar: res.data.avatar
+                      });
+                      setCroppedImage(null);
+                      setError(null);
+                    });
+                });
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
+          <MdFileUpload />
+        </button>
+        <button
+          style={{ backgroundColor: '#E36E6E' }}
           onClick={() => {
             axios
               .post(`/api/users/${authenticatedUser.id}/remove_avatar`, null, {
@@ -158,7 +164,7 @@ const AvatarForm = props => {
               });
           }}
         >
-          Remove avatar
+          <MdDelete />
         </button>
       </Buttons>
 

@@ -32,11 +32,14 @@ const StyledSettings = styled(Container)`
     padding: 0;
     align-items: center;
     flex-direction: column;
+    button {
+      width: 100%;
+    }
   }
 `;
 
 const SectionHeader = styled.h2`
-  padding: 15px 0;
+  padding: 20px 0;
   margin: 0;
   border-bottom: 1px solid grey;
   width: 100%;
