@@ -27,8 +27,11 @@ const ImageComparison = styled.div`
 `;
 
 const Buttons = styled.div`
-  display: flex;
   margin-top: 10px;
+  & > div {
+    display: flex;
+  }
+
   label {
     input {
       display: none;
@@ -41,6 +44,7 @@ const Buttons = styled.div`
     border: 1px solid lightgrey;
     border-radius: 3px;
     margin: 5px;
+    background-color: white;
   }
 `;
 
@@ -56,7 +60,13 @@ const AvatarForm = props => {
       <ImageComparison>
         <div>
           <p>Current Image</p>
-          <img src={authenticatedUser.avatar} alt="" />
+          <img
+            src={
+              authenticatedUser.avatar ||
+              'https://via.placeholder.com/500?text=Placeholder'
+            }
+            alt=""
+          />
         </div>
 
         <div>
@@ -71,57 +81,82 @@ const AvatarForm = props => {
       </ImageComparison>
 
       <Buttons>
-        <label>
-          Choose new image
-          <input
-            type="file"
-            accept="image/*"
-            onChange={e => {
-              console.log(e.target.files[0]);
-              if (e.target.files[0].size <= 1000000) {
-                setUncroppedImage(URL.createObjectURL(e.target.files[0]));
-                setCropIsOpen(true);
-                setError(null);
-              } else {
-                setError('Image file size is too big (Max 1mb)');
+        <div>
+          <label>
+            Choose new image
+            <input
+              type="file"
+              accept="image/*"
+              onChange={e => {
+                console.log(e.target.files[0]);
+                if (e.target.files[0].size <= 1000000) {
+                  setUncroppedImage(URL.createObjectURL(e.target.files[0]));
+                  setCropIsOpen(true);
+                  setError(null);
+                } else {
+                  setError('Image file size is too big (Max 1mb)');
+                }
+              }}
+            />
+          </label>
+
+          <button
+            onClick={() => {
+              try {
+                // Get blob from url
+                fetch(croppedImage)
+                  .then(res => res.blob())
+                  .then(blob => {
+                    // Send formData to endpoint
+                    const formData = new FormData();
+                    formData.append('avatar', blob);
+                    axios
+                      .post(
+                        `/api/users/${authenticatedUser.id}/update_avatar`,
+                        formData,
+                        {
+                          headers: {
+                            'Content-Type': 'multipart/form-data',
+                            Authorization: `Bearer ${accessToken}`
+                          }
+                        }
+                      )
+                      .then(res => {
+                        authActions.setAuthenticatedUser({
+                          ...authenticatedUser,
+                          avatar: res.data.avatar
+                        });
+                        setCroppedImage(null);
+                        setError(null);
+                      });
+                  });
+              } catch (error) {
+                console.log(error);
               }
             }}
-          />
-        </label>
-
+          >
+            Update Avatar
+          </button>
+        </div>
         <button
           onClick={() => {
-            try {
-              // Get blob from url
-              fetch(croppedImage)
-                .then(res => res.blob())
-                .then(blob => {
-                  // Send formData to endpoint
-                  const formData = new FormData();
-                  formData.append('avatar', blob);
-                  axios
-                    .post(
-                      `/api/users/${authenticatedUser.id}/update_avatar`,
-                      formData,
-                      {
-                        headers: {
-                          'Content-Type': 'multipart/form-data',
-                          Authorization: `Bearer ${accessToken}`
-                        }
-                      }
-                    )
-                    .then(res => {
-                      authActions.setAuthenticatedUser(res.data);
-                      setCroppedImage(null);
-                      setError(null);
-                    });
+            axios
+              .post(`/api/users/${authenticatedUser.id}/remove_avatar`, null, {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`
+                }
+              })
+              .then(res => {
+                authActions.setAuthenticatedUser({
+                  ...authenticatedUser,
+                  avatar: res.data.avatar
                 });
-            } catch (error) {
-              console.log(error);
-            }
+                setCroppedImage(null);
+                setError(null);
+              });
           }}
         >
-          Update Avatar
+          Remove avatar
         </button>
       </Buttons>
 
