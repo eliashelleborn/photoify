@@ -51,7 +51,9 @@ const Feed = styled.div`
 `;
 
 const Profile = ({ match }) => {
-  const { accessToken, authenticatedUser } = useStore(state => state.auth);
+  const { accessToken, authenticatedUser, isAuthenticated } = useStore(
+    state => state.auth
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
@@ -107,7 +109,8 @@ const Profile = ({ match }) => {
         votes={user.votes_count}
       />
 
-      {authenticatedUser.id !== user.id && <FollowButton user={user} />}
+      {isAuthenticated &&
+        authenticatedUser.id !== user.id && <FollowButton user={user} />}
 
       <Feed>
         {posts.length > 0 &&

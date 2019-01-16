@@ -52,18 +52,19 @@ const Options = styled.div`
 `;
 
 const Overlay = ({ isOpen, close, post }) => {
-  const { authenticatedUser } = useStore(state => state.auth);
+  const { authenticatedUser, isAuthenticated } = useStore(state => state.auth);
   return (
     <StyledOverlay isOpen={isOpen}>
       <ClickMask onClick={close} />
       <Content>
-        {authenticatedUser.id === post.user_id && (
-          <Options>
-            <Link to={`/edit-post?post=${post.id}`}>
-              <MdEdit />
-            </Link>
-          </Options>
-        )}
+        {isAuthenticated &&
+          authenticatedUser.id === post.user_id && (
+            <Options>
+              <Link to={`/edit-post?post=${post.id}`}>
+                <MdEdit />
+              </Link>
+            </Options>
+          )}
         <VoteButtons post={post} />
       </Content>
     </StyledOverlay>
