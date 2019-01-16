@@ -9,10 +9,13 @@ import FollowButton from '../components/FollowButton';
 import UserStats from '../components/UserStats';
 import { Container } from '../components/Container';
 
-const StyledProfile = styled(Container)`
+const StyledProfile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
 `;
 
 const UserInfo = styled.div`
@@ -52,10 +55,7 @@ const Feed = styled.div`
   margin: 0 auto;
   max-width: 960px;
   width: 100%;
-
-  @media screen and (min-width: 400px) {
-    padding-top: 25px;
-  }
+  padding-top: 25px;
 `;
 
 const Profile = ({ match }) => {

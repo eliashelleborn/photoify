@@ -1,5 +1,6 @@
 import React, { useState, useRef, Fragment } from 'react';
 import Cropper from 'react-cropper';
+import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
@@ -8,7 +9,13 @@ import { useStore } from 'easy-peasy';
 // Components
 import { Field, Label } from '../components/Form';
 import CropImage from '../components/CropImage';
-import { Button } from '../components/Button';
+import { Container } from '../components/Container';
+import { Button, LinkButton } from '../components/Button';
+
+const StyledCreatePost = styled(Container)`
+  padding-top: 20px;
+  max-width: 400px;
+`;
 
 const CreatePost = props => {
   const authState = useStore(state => state.auth);
@@ -20,7 +27,7 @@ const CreatePost = props => {
 
   if (redirect || (!image && !croppedImage)) return <Redirect to="/" />;
   return (
-    <Fragment>
+    <StyledCreatePost>
       {!croppedImage && (
         <Fragment>
           <CropImage
@@ -85,11 +92,14 @@ const CreatePost = props => {
               component="textarea"
               rows="5"
             />
-            <Button type="submit">Create</Button>
+            <div style={{ display: 'flex' }}>
+              <LinkButton to="/">Cancel</LinkButton>
+              <Button type="submit">Create</Button>
+            </div>
           </Form>
         )}
       </Formik>
-    </Fragment>
+    </StyledCreatePost>
   );
 };
 
