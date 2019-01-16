@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { useStore, useAction } from 'easy-peasy';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import Search from '../../Search';
 import UserInfo from './UserInfo';
@@ -53,7 +53,7 @@ const Menu = ({ menuIsOpen, closeMenu }) => {
   const { logout } = useAction(dispatch => dispatch.auth);
   return (
     <StyledMenu menuIsOpen={menuIsOpen}>
-      <Search />
+      <Search closeMenu={closeMenu} />
       {isAuthenticated && <UserInfo user={authenticatedUser} />}
       <Links>
         {isAuthenticated && (

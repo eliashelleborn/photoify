@@ -70,7 +70,7 @@ const UserResults = styled.div`
   }
 `;
 
-const Search = props => {
+const Search = ({ closeMenu }) => {
   const [userSearchResult, setUserSearchResult] = useState(null);
   return (
     <StyledSearch>
@@ -99,7 +99,13 @@ const Search = props => {
             <ResultHeader>Users</ResultHeader>
             <UserResults>
               {userSearchResult.map(item => (
-                <Link to={`/${item.username}`}>
+                <Link
+                  key={item.id}
+                  onClick={e => {
+                    closeMenu && closeMenu();
+                  }}
+                  to={`/${item.username}`}
+                >
                   <img src={item.avatar} alt="" />
                   <p>{item.username}</p>
                 </Link>

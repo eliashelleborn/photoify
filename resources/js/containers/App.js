@@ -68,7 +68,10 @@ const App = () => {
 
             <ProtectedRoute path="/settings" component={Settings} />
 
-            <Route path="/:username" component={Profile} />
+            <Route
+              path="/:username"
+              render={props => <Profile {...props} key={location.href} />}
+            />
           </Switch>
         </Fragment>
       )}
