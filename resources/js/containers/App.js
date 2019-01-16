@@ -23,10 +23,11 @@ import MobileNavigation from '../components/Navigation/Mobile/';
 const App = () => {
   const authState = useStore(state => state.auth);
   const authActions = useAction(dispatch => dispatch.auth);
+  /*
   const { notificationsEventListener, getNotifications } = useAction(
     dispatch => dispatch.notifications
   );
-
+  */
   // On app load
   useEffect(() => {
     const access_token = localStorage.getItem('access_token');
@@ -36,9 +37,9 @@ const App = () => {
       authActions.setToken(access_token);
       authActions.tokenAuthenticate().then(() => {
         // Get all notifications and initiate event listener
-        getNotifications().then(() => {
+        /* getNotifications().then(() => {
           notificationsEventListener();
-        });
+        }); */
       });
     } else {
       // If no token was found, just set loading status to false
