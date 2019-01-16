@@ -23,6 +23,7 @@ const Avatar = styled.div`
   width: 200px;
   height: 200px
   position: relative;
+  z-index: -1;
   img {
     border-radius: 200px;
     position: absolute;

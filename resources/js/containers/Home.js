@@ -9,6 +9,12 @@ import Search from '../components/Search';
 import { Container } from '../components/Container';
 import { LinkButton } from '../components/Button';
 
+const StyledHome = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
+
 const Feed = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,9 +24,8 @@ const Feed = styled.div`
 const GuestHomepage = styled(Container)`
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
   justify-content: center;
-  min-height: 100vh;
+  flex: 1;
 
   h1 {
     margin: 0 0 10px 0;
@@ -39,14 +44,6 @@ const GuestHomepage = styled(Container)`
       justify-content: center;
     }
   }
-`;
-
-const SearchWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px;
 `;
 
 const getFeed = accessToken => {
@@ -79,45 +76,49 @@ const Home = () => {
 
   if (loading) return null;
   return (
-    <Fragment>
-      {isAuthenticated ? (
-        <Feed>
-          {feed &&
-            feed.map(post => (
-              <Post
-                key={post.id}
-                post={{ ...post }}
-                deletePost={() =>
-                  setModalState({ content: 'delete-post', show: true })
-                }
-                editPost={() =>
-                  setModalState({ content: 'edit-post', show: true })
-                }
-              />
-            ))}
-        </Feed>
-      ) : (
-        <GuestHomepage>
-          <SearchWrapper>
-            <Search />
-          </SearchWrapper>
+    <StyledHome>
+      <Fragment>
+        {isAuthenticated ? (
+          <Feed>
+            {feed &&
+              feed.map(post => (
+                <Post
+                  key={post.id}
+                  post={{ ...post }}
+                  deletePost={() =>
+                    setModalState({ content: 'delete-post', show: true })
+                  }
+                  editPost={() =>
+                    setModalState({ content: 'edit-post', show: true })
+                  }
+                />
+              ))}
+          </Feed>
+        ) : (
+          <Fragment>
+            <Container style={{ paddingTop: '20px' }}>
+              <Search />
+            </Container>
 
-          <h1>Welcome to Photoify!</h1>
-          <p>
-            To fully enjoy this application you should login or create a new
-            account.
-          </p>
-          <p>
-            With Photoify you can share your life in pictures with friends
-            and/or fans.
-          </p>
-          <div>
-            <LinkButton to="/login">LOGIN</LinkButton>
-            <LinkButton to="/register">REGISTER</LinkButton>
-          </div>
-        </GuestHomepage>
-      )}
-    </Fragment>
+            <GuestHomepage>
+              <h1>Welcome to Photoify!</h1>
+              <p>
+                To fully enjoy this application you should login or create a new
+                account.
+              </p>
+              <p>
+                With Photoify you can share your life in pictures with friends
+                and/or fans.
+              </p>
+              <div>
+                <LinkButton to="/login">LOGIN</LinkButton>
+                <LinkButton to="/register">REGISTER</LinkButton>
+              </div>
+            </GuestHomepage>
+          </Fragment>
+        )}
+      </Fragment>
+    </StyledHome>
   );
 };
 

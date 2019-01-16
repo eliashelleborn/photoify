@@ -36,6 +36,7 @@ class UserController extends Controller
     public function search(Request $request)
     {
         $query = $request->get('query');
+        $limit = $request->get('limit');
 
         if (!$query || $query === '') {
             return response()->json(['message' => 'You havent provided a search query'], 400);
@@ -43,6 +44,8 @@ class UserController extends Controller
 
         $result = User::where('username', 'LIKE', '%' . $query . '%')
             ->orWhere('name', 'LIKE', '%' . $query . '%')
+            ->withCount(['followers'])
+            ->take($limit)
             ->get();
 
         return response()->json($result);
