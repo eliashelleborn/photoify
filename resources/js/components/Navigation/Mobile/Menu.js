@@ -12,7 +12,7 @@ const StyledMenu = styled.div`
   left: 100vw;
   width: 100vw;
   height: 100vh;
-  transform: translateX(${({ menuIsOpen }) => (menuIsOpen ? '-100vw' : '0')});
+  transform: translateX(${({ menuIsOpen }) => (menuIsOpen ? '-100%' : '0')});
   transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
   transition-delay: ${({ menuIsOpen }) => (!menuIsOpen ? '.2s' : '0s')};
   z-index: 950;
@@ -21,6 +21,11 @@ const StyledMenu = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (min-width: 1000px) {
+    max-width: 500px;
+    box-shadow: 0 3px 4px 1px rgba(167, 167, 167, 0.2);
+  }
 `;
 
 const Links = styled.div`
