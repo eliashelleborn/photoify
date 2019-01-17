@@ -10,8 +10,8 @@ use Tests\TestCase;
 
 /**
  * @testdox User\Get
- * @group users
- * @group users-get
+ * @group user
+ * @group user-get
  */
 class UserGetTest extends TestCase
 {
