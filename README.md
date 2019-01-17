@@ -22,7 +22,7 @@ $ php artisan migrate:refresh --seed
 $ php artisan serve
 ```
 
-### Tests
+### Testing
 
 `phpunit --testdox`
 
