@@ -86,7 +86,7 @@ const Home = () => {
   return (
     <StyledHome>
       {isAuthenticated &&
-        feed.length === 0 && (
+        (!feed || feed.length === 0) && (
           <Container style={{ paddingTop: '20px' }}>
             <Search />
             <p
@@ -105,7 +105,8 @@ const Home = () => {
       <Fragment>
         {isAuthenticated ? (
           <Feed>
-            {feed.length > 0 &&
+            {feed &&
+              feed.length > 0 &&
               feed.map(post => (
                 <Post
                   key={post.id}
