@@ -45,12 +45,12 @@ class PostController extends Controller
             $posts = $user->posts()
                 ->latest()
                 ->with(['myVote'])
-                ->withCount(['likes', 'dislikes'])
+                ->withCount(['likes', 'dislikes', 'votes'])
                 ->get();
         } else {
             $posts = $user->posts()
                 ->latest()
-                ->withCount(['likes', 'dislikes'])
+                ->withCount(['likes', 'dislikes', 'votes'])
                 ->get();
         }
 
