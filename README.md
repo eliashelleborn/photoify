@@ -25,3 +25,8 @@ $ php artisan serve
 ### Tests
 
 `phpunit --testdox`
+
+### User Tests
+
+- Linn Johansson
+- Andre Broman
