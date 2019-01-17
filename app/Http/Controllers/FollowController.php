@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Follow;
-use App\Notifications\UserFollowed;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +35,7 @@ class FollowController extends Controller
                 'follower_id' => Auth::id(),
                 'followee_id' => $user->id,
             ]);
-            $user->notify(new UserFollowed(Auth::user()));
+            /* $user->notify(new UserFollowed(Auth::user())); */
             return response()->json($follow);
         }
 
